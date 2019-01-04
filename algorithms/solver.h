@@ -4,7 +4,7 @@
 namespace algorithm {
     template <class Problem, class Solution>
     class Solver {
-        virtual Solution* solve(Problem*) = 0;
+        virtual Solution solve(Problem) = 0;
 
         virtual ~Solver() {};
     };
