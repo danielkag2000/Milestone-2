@@ -10,6 +10,9 @@ file(GLOB SOURCES
         server/clientHandler.h
         server/testClientHandler.cpp server/testClientHandler.h
         algorithms/solver.h
-        algorithms/search_algorithms.h)
+        algorithms/search_algorithms.h
+        algorithms/search_algorithms.cpp
+        algorithms/searchable.h
+        algorithms/state.h)
 
 add_executable(Milestone_2 ${SOURCES})
