@@ -10,7 +10,7 @@ private:
 
 public:
     // constructor
-    explicit State(T state) {
+    State(T state) {
         this->state = state;
         this->cameFrom = nullptr;
     }
