@@ -10,10 +10,10 @@ class MySerialServer : public Server {
 
 public:
 
-    virtual void open(int port, ClientHandler* clientHandler) override;
-    virtual void close() override;
+    virtual void open(int port, ClientHandler* clientHandler);
+    virtual void close();
 
-    virtual ~MySerialServer() override { }
+    virtual ~MySerialServer() { }
 };
 
 #endif
