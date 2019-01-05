@@ -13,6 +13,9 @@ file(GLOB SOURCES
         algorithms/search_algorithms.h
         algorithms/searchable.h
         algorithms/state.h
+        algorithms/search_algorithms.cpp
+        algorithms/fileCacheManager.h
+        algorithms/cacheManager.h
         )
 
 add_executable(Milestone_2 ${SOURCES})
