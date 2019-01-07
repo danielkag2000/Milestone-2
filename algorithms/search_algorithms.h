@@ -60,7 +60,7 @@ private:
     const HeuristicFunction<T>& h;
 
 public:
-    HeuristicSearcher(const HeuristicFunction<T>& h) : h(h) {}
+    explicit HeuristicSearcher(const HeuristicFunction<T>& h) : h(h) {}
     virtual ~HeuristicSearcher() {}
 
 protected:
@@ -70,12 +70,21 @@ protected:
 template <class T>
 class BestFirstSearch : public Searcher<T> {
 public:
-    BestFirstSearch(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
+    explicit BestFirstSearch(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~BestFirstSearch() {}
 
 protected:
     virtual State<T> make_search(Searchable<T>* searcher);
 };
 
+template <class T>
+class AStar : public Searcher<T> {
+public:
+    explicit AStar(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
+    virtual ~AStar() {}
+
+protected:
+    virtual State<T> make_search(Searchable<T>* searcher);
+};
 
 #endif

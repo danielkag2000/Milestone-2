@@ -75,21 +75,47 @@ State<T> BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
     open.push(searcher->getInitialState());
     while (!open.empty()) {
         current = open.pop();
-        close.insert(current);
 
         if (current == searcher->getGoalState()) {
             return current;
         }
 
         for (State<T>& s : searcher->getAllPossibleStates(current)) {
-            if (close.find(s) != close.end() && find(open.begin(), open.end(), s) != open.end()) {
+            if (close.find(s) != close.end()) {
                 s.setParent(current);
                 open.push(s);
+                close.insert(current);
 
             }
-            // need to complete the else!!!
         }
     }
+    return nullptr;
+}
+
+template <class T>
+State<T> AStar<T>::make_search(Searchable<T>* searcher) {
+    auto comparator = [](const State<T>& s1, const State<T>& s2) { return (s1.getCost() + h(s1)) - (s2.getCost() + h(s2)); };
+    priority_queue<State<T>> open(comparator);
+    set<State<T>> close;
+    State<T> current;
+
+    open.push(searcher->getInitialState());
+    while (!open.empty()) {
+        current = open.pop();
+
+        if (current == searcher->getGoalState()) {
+            return current;
+        }
+
+        for (State<T>& s : searcher->getAllPossibleStates(current)) {
+            if (close.find(s) != close.end()) {
+                s.setParent(current);
+                open.push(s);
+                close.insert(current);
+            }
+        }
+    }
+    return nullptr;
 }
 
 

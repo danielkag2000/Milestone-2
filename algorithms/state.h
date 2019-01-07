@@ -10,7 +10,7 @@ private:
 
 public:
     // constructor
-    State(T state) {
+    explicit State(T state) {
         this->state = state;
         this->cameFrom = nullptr;
     }
@@ -25,6 +25,7 @@ public:
     bool operator==(State<T> s) { return this->state == s; }
     void setParent (State<T> parent) { this->cameFrom = parent; }
     void setCost (double cost) { this->cost = cost; }
+    double getCost () { return this->cost; }
     State<T> getParent () { return this->cameFrom; }
 };
 
