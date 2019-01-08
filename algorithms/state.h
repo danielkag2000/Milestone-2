@@ -22,7 +22,7 @@ public:
         this->cameFrom = s.cameFrom;
     }
 
-    bool operator==(State<T> s) { return this->state == s; }
+    bool operator==(const State<T>& s) { return this->state == s.state; }
     void setParent (State<T> parent) { this->cameFrom = parent; }
     void setCost (double cost) { this->cost = cost; }
     double getCost () { return this->cost; }
