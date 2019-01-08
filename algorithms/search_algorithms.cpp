@@ -68,7 +68,7 @@ State<T> BFS<T>::make_search(Searchable<T>* searcher) {
 template <class T>
 State<T> BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
     auto comparator = [](const State<T>& s1, const State<T>& s2) { return h(s1) - h(s2); };
-    priority_queue<State<T>> open(comparator);
+    priority_queue<State<T>, vector<State<T>>, decltype(comparator)> open(comparator);
     set<State<T>> close;
     State<T> current;
 
@@ -95,7 +95,7 @@ State<T> BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
 template <class T>
 State<T> AStar<T>::make_search(Searchable<T>* searcher) {
     auto comparator = [](const State<T>& s1, const State<T>& s2) { return (s1.getCost() + h(s1)) - (s2.getCost() + h(s2)); };
-    priority_queue<State<T>> open(comparator);
+    priority_queue<State<T>, vector<State<T>>, decltype(comparator)> open(comparator);
     set<State<T>> close;
     State<T> current;
 
