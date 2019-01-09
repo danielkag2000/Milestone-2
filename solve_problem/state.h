@@ -23,11 +23,11 @@ public:
          }
 
 
-    State(const State<T>* s) {
+    /*State(const State<T>* s) {
         this->state = s->state;
         this->cost = s->cost;
         this->cameFrom = s->cameFrom;
-    }
+    }*/
     // copy constructor
     /*State(const State<T>& s) {
         this->state = s.state;

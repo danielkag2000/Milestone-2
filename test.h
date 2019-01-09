@@ -30,11 +30,11 @@ public:
     }
 
     State<pInt> getInitialState() {
-        return State<pInt>({0, 0});
+        return start;
     }
 
     State<pInt> getGoalState() {
-        return State<pInt>({size - 1, size - 1});
+        return end;
     }
 
     virtual list<State<pInt>> getAllPossibleStates(const State<pInt>& s) {

@@ -17,7 +17,7 @@ using namespace std;
 
 template <class T>
 class SearchInfo {
-    //int cost;
+    int cost;
     //int develope;
     list<T> path;
 
@@ -36,7 +36,7 @@ class SearchInfo {
 
 public:
     SearchInfo(State<T>* last) {
-        //this->cost = cost;
+        this->cost = last->getCost();
         //this->develope = developedNodes;
         //this->path = path;
         path = createStateList(last);
@@ -92,6 +92,35 @@ protected:
 
 
 
+
+template<class T>
+class Pointer {
+
+private:
+    T* ptr;
+
+public:
+    Pointer(T* ptr) : ptr(ptr) { }
+    Pointer() : ptr(nullptr) { }
+
+    bool operator<(const Pointer& ptr2) const {
+        return *ptr < *(ptr2.ptr);
+    }
+
+    bool operator==(const Pointer& ptr2) const {
+        return *ptr == *(ptr.ptr);
+    }
+
+    T* operator*() const {
+        return ptr;
+    }
+
+    //~Pointer() { delete ptr; }
+};
+
+
+
+
 template <class T>
 class BFS : public Searcher<T> {
 public:
@@ -99,24 +128,24 @@ public:
 
 protected:
     virtual State<T>* make_search(Searchable<T>* searcher) {
-        list<State<T>> open;  // will be treated as a stack
-        set<State<T>> close;
-        State<T> current;
+        list<Pointer<State<T>>> open;  // will be treated as a stack
+        set<Pointer<State<T>>> close;
+        Pointer<State<T>> current;
 
-        open.push_back(searcher->getInitialState());
+        open.push_back(Pointer<State<T>>(new State<T>(searcher->getInitialState())));
         while (!open.empty()) {
             current = open.front();
             open.pop_front();
             close.insert(current);
 
-            if (current == searcher->getGoalState()) {
-                return move(current);
+            if (*(*current) == searcher->getGoalState()) {
+                return *current;
             }
 
-            for (State<T>& s : searcher->getAllPossibleStates(current)) {
-                if (close.find(s) == close.end()) {
-                    s.setParent(&(*close.find(current)));
-                    open.push_back(s);
+            for (State<T>& s : searcher->getAllPossibleStates(*(*current))) {
+                if (close.find(&s) == close.end()) {
+                    s.setParent(*current);
+                    open.push_back(new State<T>(s));
                 }
             }
         }
