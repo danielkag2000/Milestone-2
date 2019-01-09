@@ -3,7 +3,7 @@
 
 template <class T>
 class State {
-private:
+protected:
     T state;  // the state we represent
     double cost;  // the cost to reach that state
     State<T> cameFrom;  // the State we came from (setter)
@@ -22,11 +22,11 @@ public:
         this->cameFrom = s.cameFrom;
     }
 
-    bool operator==(const State<T>& s) { return this->state == s.state; }
-    void setParent (State<T> parent) { this->cameFrom = parent; }
-    void setCost (double cost) { this->cost = cost; }
-    double getCost () { return this->cost; }
-    State<T> getParent () { return this->cameFrom; }
+    virtual bool operator==(const State<T>& s) { return this->state == s.state; }
+    virtual void setParent (State<T> parent) { this->cameFrom = parent; }
+    virtual void setCost (double cost) { this->cost = cost; }
+    virtual double getCost () { return this->cost; }
+    virtual State<T> getParent () { return this->cameFrom; }
 };
 
 #endif

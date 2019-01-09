@@ -7,9 +7,9 @@
 template <class T>
 class Searchable {
 public:
-    virtual State<T> getInitialState() = 0;
-    virtual State<T> getGoalState() = 0;
-    virtual std::list<State<T>> getAllPossibleStates(State<T> s) = 0;
+    virtual T getInitialState() = 0;
+    virtual T getGoalState() = 0;
+    virtual std::list<T> getAllPossibleStates(T s) = 0;
     virtual ~Searchable() {};
 };
 #endif

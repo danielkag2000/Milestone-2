@@ -9,8 +9,20 @@ using namespace algorithm;
 using namespace std;
 
 template <class T>
-using GraphSearch = Solver<Searchable<T>*, list<State<T>>>;
+class SearchInfo {
+    int cost;
+    int develope;
+    list<T> path;
 
+    SearchInfo(int cost, int developedNodes, list<T> path) {
+        this->cost = cost;
+        this->develope = developedNodes;
+        this->path = path;
+    }
+};
+
+template <class T>
+using GraphSearch = Solver<Searchable<T>*, list<State<T>>>;
 
 template <class T>
 class Searcher : public GraphSearch<T> {
