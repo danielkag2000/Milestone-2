@@ -6,17 +6,21 @@ set(CMAKE_CXX_STANDARD 14)
 file(GLOB SOURCES
         main.cpp
         server/server.h
-        server/serialServer.h server/serialServer.cpp
+        #server/serialServer.h server/serialServer.cpp
         server/clientHandler.h server/clientHandler.cpp
         server/testClientHandler.cpp server/testClientHandler.h
-        algorithms/solver.h
-        algorithms/search_algorithms.h
-        algorithms/searchable.h
-        algorithms/state.h
-        algorithms/search_algorithms.cpp
+        solve_problem/solver.h
+#        algorithms/search_algorithms.h
+        solve_problem/searchable.h
+        solve_problem/state.h
+        solve_problem/search_algorithms.h solve_problem/search_algorithms.cpp
+#        algorithms/search_algorithms.cpp
         algorithms/fileCacheManager.h
         algorithms/cacheManager.h
-        algorithms/state_for_test.h
+#        algorithms/state_for_test.h
+        test.h
+        solve_problem/algo_imp.h
+        solve_problem/others.h
         )
 
 add_executable(Milestone_2 ${SOURCES})

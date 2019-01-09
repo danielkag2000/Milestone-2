@@ -15,6 +15,12 @@ public:
         this->cameFrom = nullptr;
     }
 
+    State() {
+        this->cameFrom = nullptr;
+    }
+
+    ~State() { delete cameFrom; }
+
     // copy constructor
     State(const State<T>& s) {
         this->state = s.state;
@@ -22,11 +28,12 @@ public:
         this->cameFrom = s.cameFrom;
     }
 
-    virtual bool operator==(const State<T>& s) { return this->state == s.state; }
-    virtual void setParent (State<T>* parent) { this->cameFrom = parent; }
-    virtual void setCost (double cost) { this->cost = cost; }
-    virtual double getCost () { return this->cost; }
-    virtual State<T>* getParent () { return this->cameFrom; }
+    bool operator==(const State<T>& s) { return this->state == s.state; }
+    void setParent (State<T>* parent) { this->cameFrom = parent; }
+    void setCost (double cost) { this->cost = cost; }
+    double getCost () const { return this->cost; }
+    State<T>* getParent () { return this->cameFrom; }
+    T getValue () const { return this->state; }
 };
 
 #endif

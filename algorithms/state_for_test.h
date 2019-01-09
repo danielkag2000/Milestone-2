@@ -3,32 +3,19 @@
 
 #include <list>
 #include <vector>
-#include "searchable.h"
-#include "state.h"
+#include "../solve_problem/searchable.h"
+#include "../solve_problem/state.h"
 
 using namespace std;
 
-class runTable : public State<pair<int, int>> {
-    pair<int, int> i_j;
+/*class runTable : public State<pair<int, int>> {
+
 
 public:
-    runTable(int i, int j) {
-        this->i_j = pair<int, int>(i, j);
-    }
+    runTable(int i, int j) : State<pair<int, int>>({i,j}) {}
 
-    int getI() {return i_j.first;}
-    int getJ() {return i_j.second;}
-
-    vector<vector<int>> copyArray( vector<vector<int>> t) {
-        vector<vector<int>> copy;
-
-        for (int i = 0; i < t.size(); i++) {
-            for (int j = 0; j < t.size(); j++) {
-                copy.push_back(t[i]);
-            }
-        }
-        return copy;
-    }
+    int getI() {return this->state.first;}
+    int getJ() {return this->state.second;}
 };
 
 
@@ -51,41 +38,41 @@ public:
         return runTable(size - 1, size - 1);
     }
 
-    virtual list<runTable> getAllPossibleStates(runTable s) {
+    virtual list<runTable*> getAllPossibleStates(runTable* s) {
         bool UP, DOWN, LEFT, RIGHT;
 
-        DOWN = s.getI() == size - 1 ? false : true;
-        RIGHT = s.getJ() == size - 1 ? false : true;
-        UP = s.getI() == 0 ? false : true;
-        LEFT = s.getJ() == 0 ? false : true;
+        DOWN = s->getI() == size - 1 ? false : true;
+        RIGHT = s->getJ() == size - 1 ? false : true;
+        UP = s->getI() == 0 ? false : true;
+        LEFT = s->getJ() == 0 ? false : true;
 
-        list<runTable> oper;
+        list<runTable*> oper;
 
-        if (UP) {
-            runTable child = runTable(s.getI() - 1, s.getJ());
-            child.setParent(s);
+        if (UP && table[s->getI() - 1][s->getJ()] != -1) {
+            runTable* child = new runTable(s->getI() - 1, s->getJ());
+            //child->setParent(&s);
             oper.push_back(child);
         }
 
-        if (DOWN) {
-            runTable child = runTable(s.getI() + 1, s.getJ());
-            child.setParent(s);
+        if (DOWN && table[s->getI() + 1][s->getJ()] != -1) {
+            runTable* child = new runTable(s->getI() + 1, s->getJ());
+            //child->setParent(&s);
             oper.push_back(child);
         }
 
-        if (LEFT) {
-            runTable child = runTable(s.getI(), s.getJ() - 1);
-            child.setParent(s);
+        if (LEFT && table[s->getI()][s->getJ() - 1] != -1) {
+            runTable* child = new runTable(s->getI(), s->getJ() - 1);
+            //child->setParent(&s);
             oper.push_back(child);
         }
 
-        if (RIGHT) {
-            runTable child = runTable(s.getI(), s.getJ() + 1);
-            child.setParent(s);
+        if (RIGHT && table[s->getI()][s->getJ() + 1] != -1) {
+            runTable* child = new runTable(s->getI(), s->getJ() + 1);
+            //child->setParent(&s);
             oper.push_back(child);
         }
         return oper;
     }
 };
-
+*/
 #endif //MILESTONE_2_STATE_FOR_TEST_H
