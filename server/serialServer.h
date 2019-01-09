@@ -4,16 +4,14 @@
 #include "server.h"
 #include "clientHandler.h"
 
-using namespace server_side;
-
-class MySerialServer : public Server {
+class MySerialServer : public server_side::Server {
 
 public:
 
-    virtual void open(int port, ClientHandler* clientHandler);
+    virtual void open(int port, server_side::ClientHandler* clientHandler);
     virtual void close();
 
-    virtual ~MySerialServer() { }
+    virtual ~MySerialServer() { close(); }
 };
 
 #endif

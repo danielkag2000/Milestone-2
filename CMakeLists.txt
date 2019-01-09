@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 file(GLOB SOURCES
         main.cpp
         server/server.h
-        server/serialServer.h
+        server/serialServer.h server/serialServer.cpp
         server/clientHandler.h server/clientHandler.cpp
         server/testClientHandler.cpp server/testClientHandler.h
         algorithms/solver.h

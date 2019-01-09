@@ -6,6 +6,5 @@ int main() {
     //std::cout << "Hello, World!" << std::endl;
     //BFS< bfs = new BFS()
 
-
     return 0;
 }
