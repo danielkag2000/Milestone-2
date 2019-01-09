@@ -7,7 +7,7 @@ file(GLOB SOURCES
         main.cpp
         server/server.h
         server/serialServer.h
-        server/clientHandler.h
+        server/clientHandler.h server/clientHandler.cpp
         server/testClientHandler.cpp server/testClientHandler.h
         algorithms/solver.h
         algorithms/search_algorithms.h
