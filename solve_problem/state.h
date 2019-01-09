@@ -19,14 +19,21 @@ public:
         this->cameFrom = nullptr;
     }
 
-    ~State() { delete cameFrom; }
+    ~State() { //delete cameFrom;
+         }
 
+
+    State(const State<T>* s) {
+        this->state = s->state;
+        this->cost = s->cost;
+        this->cameFrom = s->cameFrom;
+    }
     // copy constructor
-    State(const State<T>& s) {
+    /*State(const State<T>& s) {
         this->state = s.state;
         this->cost = s.cost;
         this->cameFrom = s.cameFrom;
-    }
+    }*/
 
     bool operator==(const State<T>& s) const { return this->state == s.state; }
     bool operator<(const State<T>& s) const { return this->state < s.state; }

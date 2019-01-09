@@ -21,9 +21,9 @@ class SearchInfo {
     //int develope;
     list<T> path;
 
-    list<T> createStateList(State<T> endState) {
+    list<T> createStateList(State<T>* endState) {
         list<T> stateList;
-        State<T>* current = &endState;
+        State<T>* current = endState;
         stateList.push_front(current->getValue());
 
         while (current->getParent() != nullptr) {
@@ -35,7 +35,7 @@ class SearchInfo {
 
 
 public:
-    SearchInfo(State<T> last) {
+    SearchInfo(State<T>* last) {
         //this->cost = cost;
         //this->develope = developedNodes;
         //this->path = path;
@@ -45,6 +45,20 @@ public:
     //int getNumOfDevelopeNodes() { return this->develope; }
     list<T> getPath() { return this->path; }
 };
+
+
+template <class T>
+State<T>* move(State<T>& s) {
+    State<T>* last = new State<T>(s);
+    State<T>* current = last;
+    State<T>* par;
+
+    while (current->getParent() != nullptr) {
+        par = new State<T>(current->getParent());
+        current->setParent(par);
+        current = par;
+    }
+}
 
 
 
@@ -62,7 +76,7 @@ public:
     virtual ~Searcher() {}
 
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher) = 0;
+    virtual State<T>* make_search(Searchable<T>* searcher) = 0;
 };
 
 
@@ -73,7 +87,7 @@ public:
     virtual ~DFS() {}
 
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher);
+    virtual State<T>* make_search(Searchable<T>* searcher);
 };
 
 
@@ -84,7 +98,7 @@ public:
     virtual ~BFS() {}
 
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher) {
+    virtual State<T>* make_search(Searchable<T>* searcher) {
         list<State<T>> open;  // will be treated as a stack
         set<State<T>> close;
         State<T> current;
@@ -96,12 +110,12 @@ protected:
             close.insert(current);
 
             if (current == searcher->getGoalState()) {
-                return current;
+                return move(current);
             }
 
             for (State<T>& s : searcher->getAllPossibleStates(current)) {
                 if (close.find(s) == close.end()) {
-                    s.setParent(&current);
+                    s.setParent(&(*close.find(current)));
                     open.push_back(s);
                 }
             }
@@ -130,7 +144,7 @@ public:
     explicit HeuristicSearcher(const HeuristicFunction<T>& h) : h(h) {}
     virtual ~HeuristicSearcher() {}
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher) = 0;
+    virtual State<T>* make_search(Searchable<T>* searcher) = 0;
 };
 
 
@@ -144,7 +158,7 @@ public:
     explicit BestFirstSearch(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~BestFirstSearch() {}
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher);
+    virtual State<T>* make_search(Searchable<T>* searcher);
 };
 
 
@@ -156,7 +170,7 @@ public:
     explicit AStar(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~AStar() {}
 protected:
-    virtual State<T> make_search(Searchable<T>* searcher);
+    virtual State<T>* make_search(Searchable<T>* searcher);
 };
 
 
