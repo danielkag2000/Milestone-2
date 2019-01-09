@@ -20,7 +20,6 @@ file(GLOB SOURCES
 #        algorithms/state_for_test.h
         test.h
         solve_problem/algo_imp.h
-        solve_problem/others.h
         )
 
 add_executable(Milestone_2 ${SOURCES})

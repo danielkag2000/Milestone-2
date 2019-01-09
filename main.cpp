@@ -28,7 +28,7 @@ int main() {
 
     list<pInt> l = s->getPath();
     for (pInt p : l) {
-       // cout << p.first << ", " << p.second <<endl;
+        cout << p.first << ", " << p.second <<endl;
     }
 
     return 0;

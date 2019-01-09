@@ -7,7 +7,6 @@
 
 #include "solver.h"
 #include "searchable.h"
-#include "others.h"
 #include <list>
 #include <stack>
 #include <unordered_set>
