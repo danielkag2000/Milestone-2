@@ -6,7 +6,7 @@ class State {
 protected:
     T state;  // the state we represent
     double cost;  // the cost to reach that state
-    State<T> cameFrom;  // the State we came from (setter)
+    State<T>* cameFrom;  // the State we came from (setter)
 
 public:
     // constructor
@@ -16,17 +16,17 @@ public:
     }
 
     // copy constructor
-    State(State<T>& s) {
+    State(const State<T>& s) {
         this->state = s.state;
         this->cost = s.cost;
         this->cameFrom = s.cameFrom;
     }
 
     virtual bool operator==(const State<T>& s) { return this->state == s.state; }
-    virtual void setParent (State<T> parent) { this->cameFrom = parent; }
+    virtual void setParent (State<T>* parent) { this->cameFrom = parent; }
     virtual void setCost (double cost) { this->cost = cost; }
     virtual double getCost () { return this->cost; }
-    virtual State<T> getParent () { return this->cameFrom; }
+    virtual State<T>* getParent () { return this->cameFrom; }
 };
 
 #endif

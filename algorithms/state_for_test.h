@@ -4,8 +4,10 @@
 #include <list>
 #include <vector>
 #include "searchable.h"
+#include "state.h"
 
 using namespace std;
+
 class runTable : public State<pair<int, int>> {
     pair<int, int> i_j;
 
