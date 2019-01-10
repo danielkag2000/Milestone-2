@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 file(GLOB SOURCES
         main.cpp
         server/server.h
-        #server/serialServer.h server/serialServer.cpp
+        server/serialServer.h server/serialServer.cpp
         server/clientHandler.h server/clientHandler.cpp
         server/testClientHandler.cpp server/testClientHandler.h
         solve_problem/solver.h
@@ -22,4 +22,4 @@ file(GLOB SOURCES
         solve_problem/algo_imp.h
         )
 
-add_executable(Milestone_2 ${SOURCES})
+add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h)
