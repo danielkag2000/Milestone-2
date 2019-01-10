@@ -7,7 +7,11 @@
 using namespace std;
 
 namespace server_side {
+
+    typedef char byte;
+
     class Client {
+    private:
         int _fd;
     public:
         /**
@@ -21,8 +25,9 @@ namespace server_side {
          * Read data from this client to a given buffer
          * @param buf the buffer
          * @param length the length of the buffer
+         * @return the amount of bytes actually read
          */
-        void read(void* buf, size_t length);
+        ssize_t read(void* buf, size_t length);
 
         /**
          * Write buffer data this client
@@ -36,8 +41,9 @@ namespace server_side {
          * @param v the vector
          * @param len the length of data to be read
          * @param offset the offset to start writing to
+         * @return the amount of bytes actually read
          */
-        void read(vector<char*> v, size_t len, size_t offset = 0);
+        ssize_t read(vector<byte>& v, size_t len, size_t offset = 0);
 
         /**
          * Write a vector to the client
@@ -45,7 +51,7 @@ namespace server_side {
          * @param len the length to write
          * @param offset the offset to start writing from
          */
-        void write(vector<char*> v, size_t len, size_t offset = 0);
+        void write(const vector<byte>& v, size_t len, size_t offset = 0);
 
         /**
          * Close this client.
@@ -65,6 +71,14 @@ namespace server_side {
          * @param client the client instance
          */
         virtual void handleClient(Client client) = 0;
+
+        virtual void handleClient(istream& is, ostream& os) = 0;
+
+        /**
+         * Copy this instance of client handler.
+         * @return a copy.
+         */
+        virtual ClientHandler* copy() = 0;
 
         /**
          * Destructor.

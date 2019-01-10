@@ -4,14 +4,41 @@
 #include "server.h"
 #include "clientHandler.h"
 
-class MySerialServer : public server_side::Server {
+namespace server_side {
+    class MySerialServer : public server_side::Server {
+    private:
+        int _sockfd;
+        bool _open;
 
-public:
+        pthread_t threadId;
 
-    virtual void open(int port, server_side::ClientHandler* clientHandler);
-    virtual void close();
+    protected:
+        /**
+         * Accept clients on separate thread.
+         * @param handler a client handler
+         * @return true if managed to open thread, false otherwise
+         */
+        virtual bool acceptClients(server_side::ClientHandler* handler);
+    public:
 
-    virtual ~MySerialServer() { close(); }
-};
+        /**
+         * Construct a new serial server.
+         * @param maxconn the maximal amount of connections allowed.
+         */
+        MySerialServer() :
+                _sockfd(-1), _open(false) { };
+
+        virtual bool open(int port, server_side::ClientHandler* clientHandler);
+
+        virtual void close();
+
+        virtual bool isOpen();
+
+        /**
+         * Destructor.
+         */
+        virtual ~MySerialServer() { close(); }
+    };
+}
 
 #endif
