@@ -81,17 +81,6 @@ protected:
 
 
 
-template <class T>
-class DFS : public Searcher<T> {
-public:
-    virtual ~DFS() {}
-
-protected:
-    virtual State<T>* make_search(Searchable<T>* searcher);
-};
-
-
-
 
 template<class T>
 class Pointer {
@@ -108,7 +97,7 @@ public:
     }
 
     bool operator==(const Pointer& ptr2) const {
-        return *ptr == *(ptr.ptr);
+        return *ptr == *(ptr2.ptr);
     }
 
     T* operator*() const {
@@ -116,6 +105,40 @@ public:
     }
 
     //~Pointer() { delete ptr; }
+};
+
+
+
+
+template <class T>
+class DFS : public Searcher<T> {
+public:
+    virtual ~DFS() {}
+
+protected:
+    virtual State<T>* make_search(Searchable<T>* searcher) {
+        list<Pointer<State<T>>> open;  // will be treated as a stack
+        set<Pointer<State<T>>> close;
+        Pointer<State<T>> current;
+
+        open.push_back(Pointer<State<T>>(new State<T>(searcher->getInitialState())));
+        while (!open.empty()) {
+            current = open.back();
+            open.pop_back();
+            close.insert(current);
+
+            if (*(*current) == searcher->getGoalState()) {
+                return *current;
+            }
+
+            for (State<T>& s : searcher->getAllPossibleStates(*(*current))) {
+                if (close.find(&s) == close.end()) {
+                    s.setParent(*current);
+                    open.push_back(new State<T>(s));
+                }
+            }
+        }
+    }
 };
 
 

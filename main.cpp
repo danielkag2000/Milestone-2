@@ -23,8 +23,8 @@ int main() {
     TableGraph* t = new TableGraph(table);
 
 
-    BFS<pInt>* bfs = new BFS<pInt>();
-    SearchInfo<pInt>* s = bfs->solve(t);
+    DFS<pInt>* alg = new DFS<pInt>();
+    SearchInfo<pInt>* s = alg->solve(t);
 
     list<pInt> l = s->getPath();
     for (pInt p : l) {

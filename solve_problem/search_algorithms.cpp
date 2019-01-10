@@ -4,7 +4,7 @@
 #include <set>
 #include <queue>
 
-template <class T>
+/*template <class T>
 State<T>* DFS<T>::make_search(Searchable<T>* searcher) {
     list<State<T>> open;  // will be treated as a stack
     set<State<T>> close;
@@ -26,7 +26,7 @@ State<T>* DFS<T>::make_search(Searchable<T>* searcher) {
             }
         }
     }
-}
+}*/
 
 /*
 template <class T>
