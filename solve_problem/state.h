@@ -40,7 +40,7 @@ public:
     void setParent (State<T>* parent) { this->cameFrom = parent; }
     void setCost (double cost) { this->cost = cost; }
     double getCost () const { return this->cost; }
-    State<T>* getParent () { return this->cameFrom; }
+    State<T>* getParent () const { return this->cameFrom; }
     T getValue () const { return this->state; }
 };
 

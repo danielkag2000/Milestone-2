@@ -22,8 +22,9 @@ int main() {
 
     TableGraph* t = new TableGraph(table);
 
-
-    DFS<pInt>* alg = new DFS<pInt>();
+    ManhetenDistance mh = ManhetenDistance(State<pInt>({11, 11}));
+    BestFirstSearch<pInt>* alg = new BestFirstSearch<pInt>(mh);
+    //DFS<pInt>* alg = new DFS<pInt>();
     SearchInfo<pInt>* s = alg->solve(t);
 
     list<pInt> l = s->getPath();

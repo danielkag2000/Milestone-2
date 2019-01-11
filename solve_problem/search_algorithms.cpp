@@ -55,7 +55,7 @@ State<T> BFS<T>::make_search(Searchable<T>* searcher) {
 */
 
 
-
+/*
 template <class T>
 State<T>* BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
     auto comparator = [](const State<T>& s1, const State<T>& s2) { return h(s1) - h(s2); };
@@ -80,7 +80,7 @@ State<T>* BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
         }
     }
     return nullptr;
-}
+}*/
 
 
 
