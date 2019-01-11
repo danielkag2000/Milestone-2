@@ -192,9 +192,9 @@ public:
     virtual double operator()(const State<T>& current) const = 0;
 };
 
-class ManhetenDistance : public HeuristicFunction<pair<int, int>> {
+class ManhattanDistance : public HeuristicFunction<pair<int, int>> {
 public:
-    ManhetenDistance(const State<pair<int, int>> goal_state) : HeuristicFunction(goal_state) {}
+    ManhattanDistance(const State<pair<int, int>> goal_state) : HeuristicFunction(goal_state) {}
 
     double operator()(const State<pair<int, int>>& current) const {
         return abs(current.getValue().first - goal.getValue().first)
@@ -228,7 +228,8 @@ public:
     virtual ~BestFirstSearch() {}
 protected:
     virtual State<T>* make_search(Searchable<T>* searcher) {
-        auto comparator = [](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return h(*(*s1)) - h(*(*s2)); };
+        auto& func = HeuristicSearcher<T>::h;
+        auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return func(*(*s1)) - func(*(*s2)); };
         priority_queue<Pointer<State<T>>, vector<Pointer<State<T>>>, decltype(comparator)> open(comparator);
         set<Pointer<State<T>>> close;
         Pointer<State<T>> current;
