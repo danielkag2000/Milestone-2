@@ -11,7 +11,7 @@ namespace server_side {
     public:
         MyTestClientHandler();
 
-        virtual void handleClient(Client client);
+        //virtual void handleClient(Client client);
 
         virtual void handleClient(istream& is, ostream& os);
 

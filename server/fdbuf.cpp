@@ -21,7 +21,7 @@ namespace server_side {
     }
 
     int fdbuf::overflow(int c) {
-        ssize_t written = write(_fd, &c, sizeof(c));
+        ssize_t written = write(_fd, &c, c == EOF ? 0 : 1); // try writing
         return written < 0 ? traits_type::eof() : traits_type::to_int_type(written);
     }
 

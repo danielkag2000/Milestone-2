@@ -66,12 +66,17 @@ namespace server_side {
 
     class ClientHandler {
     public:
+//        /**
+//         * Handle a client
+//         * @param client the client instance
+//         */
+//        virtual void handleClient(Client client) = 0;
+
         /**
          * Handle a client
-         * @param client the client instance
+         * @param is an input stream associated with the client
+         * @param os an output stream associated with the client
          */
-        virtual void handleClient(Client client) = 0;
-
         virtual void handleClient(istream& is, ostream& os) = 0;
 
         /**
