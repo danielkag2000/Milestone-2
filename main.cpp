@@ -37,19 +37,20 @@ namespace boot {
                 {10, 8, 0, 2, 3, 8, 0,10,10, 2, 7},
                 {5, 7, 0, 8, 8, 8, 0, 3, 4, 5, 1},
                 {7, 7, 5,10, 8,10, 1, 6, 9, 9, 1},
-                {-1,10, 1,10, 7, 7, 3,10, 8, 0, 6}};
+                {5,10, 1,10, 7, 7, 3,10, 8, 0, 6}};
 
         TableGraph* t = new TableGraph(table);
 
         ManhattanDistance mh = ManhattanDistance(State<pInt>({11, 11}));
-        BestFirstSearch<pInt>* alg = new BestFirstSearch<pInt>(mh);
-        //DFS<pInt>* alg = new DFS<pInt>();
+        AStar<pInt>* alg = new AStar<pInt>(mh);
+        //BFS<pInt>* alg = new BFS<pInt>();
         SearchInfo<pInt>* s = alg->solve(t);
 
         list<pInt> l = s->getPath();
         for (pInt p : l) {
             cout << p.first << ", " << p.second <<endl;
         }
+        cout << "with the cost of: " << s->getCost() << endl;
 
         return 0;
     }

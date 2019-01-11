@@ -41,7 +41,7 @@ public:
         //this->path = path;
         path = createStateList(last);
     }
-    //int getCost() { return this->cost; }
+    int getCost() { return this->cost; }
     //int getNumOfDevelopeNodes() { return this->develope; }
     list<T> getPath() { return this->path; }
 };
@@ -229,7 +229,7 @@ public:
 protected:
     virtual State<T>* make_search(Searchable<T>* searcher) {
         auto& func = HeuristicSearcher<T>::h;
-        auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return func(*(*s1)) - func(*(*s2)); };
+        auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return func(*(*s1)) > func(*(*s2)); };
         priority_queue<Pointer<State<T>>, vector<Pointer<State<T>>>, decltype(comparator)> open(comparator);
         set<Pointer<State<T>>> close;
         Pointer<State<T>> current;
@@ -251,14 +251,6 @@ protected:
                     open.push(new State<T>(s));
                 }
             }
-
-            /*for (State<T>& s : searcher->getAllPossibleStates(current)) {
-                if (close.find(s) != close.end()) {
-                    s.setParent(&current);
-                    open.push(s);
-                    close.insert(current);
-                }
-            }*/
         }
         return nullptr;
     }
@@ -268,12 +260,37 @@ protected:
 
 
 template <class T>
-class AStar : public Searcher<T> {
+class AStar : public HeuristicSearcher<T> {
 public:
-    explicit AStar(const HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
+    AStar(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~AStar() {}
 protected:
-    virtual State<T>* make_search(Searchable<T>* searcher);
+    virtual State<T>* make_search(Searchable<T>* searcher) {
+        auto& func = HeuristicSearcher<T>::h;
+        auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return ((*s1)->getCost() + func(*(*s1))) > ((*s2)->getCost() + func(*(*s2))); };
+        priority_queue<Pointer<State<T>>, vector<Pointer<State<T>>>, decltype(comparator)> open(comparator);
+        set<Pointer<State<T>>> close;
+        Pointer<State<T>> current;
+
+        open.push(Pointer<State<T>>(new State<T>(searcher->getInitialState())));
+        while (!open.empty()) {
+            current = open.top();
+            open.pop();
+            close.insert(current);
+
+            if (*(*current) == searcher->getGoalState()) {
+                return *current;
+            }
+
+            for (State<T>& s : searcher->getAllPossibleStates(*(*current))) {
+                if (close.find(&s) == close.end()) {
+                    s.setParent(*current);
+                    open.push(new State<T>(s));
+                }
+            }
+        }
+        return nullptr;
+    }
 };
 
 
