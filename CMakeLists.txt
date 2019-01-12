@@ -20,6 +20,7 @@ file(GLOB SOURCES
 #        algorithms/state_for_test.h
         test.h
         solve_problem/algo_imp.h
+        solve_problem/searchable_table.h solve_problem/searchable_table.cpp
         )
 
 add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h)
