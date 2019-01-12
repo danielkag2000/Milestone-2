@@ -21,7 +21,7 @@ public:
         this->table = table;
         this->size = table.size();
         this->start = State<pInt>(startPoint);
-        this->start.setCost(table[0][0]);
+        this->start.setCost(table[startPoint.first][startPoint.second]);
         this->end = State<pInt>(endPoint);
     }
 
