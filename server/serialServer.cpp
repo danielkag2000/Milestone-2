@@ -106,6 +106,10 @@ struct ServerData {
     }
 };
 
+void MySerialServer::wait() {
+    throw "unsupported operation";
+}
+
 #include "fdbuf.h"
 
 /**

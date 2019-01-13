@@ -4,6 +4,7 @@
 #include <vector>
 #include "server/parallelServer.h"
 #include "server/testClientHandler.h"
+#include <unistd.h>
 
 namespace boot {
     int main() {
@@ -14,8 +15,10 @@ namespace boot {
 
         s->open(25565, ch);
 
-        int x;
-        cin >> x;
+        sleep(1);
+        if (s->isOpen()) {
+            s->wait();
+        }
 
         s->close();
 

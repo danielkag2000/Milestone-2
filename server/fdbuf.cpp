@@ -5,6 +5,7 @@
 #include "fdbuf.h"
 #include <unistd.h>
 #include <poll.h>
+#include <iostream>
 
 #define TRY_RELOADING \
 		if (_offset == _chars && !reload()) { \
@@ -28,8 +29,8 @@ namespace server_side {
     bool fdbuf::reload() {
         _chars = read(_fd, &_istream[0], _bufsize);
 
-        if (_chars < 0) {
-            // failed reading
+        if (_chars <= 0) {
+            // read nothing
             RESET_POINTERS
             return false;
         }
@@ -72,6 +73,11 @@ namespace server_side {
 
     int fdbuf::underflow() {
         TRY_RELOADING
+
+        if (_offset >= _chars) {
+            std::cout << "hi" << std::endl;
+        }
+
         return traits_type::to_int_type(_istream[_offset]);
     }
 

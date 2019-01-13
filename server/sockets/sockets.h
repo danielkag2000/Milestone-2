@@ -16,6 +16,7 @@ namespace exceptions {
         void close();
 
         void setTimeout(int sec, int usec = 0);
+        timeval getTimeout();
 
         int fd();
     };
@@ -29,6 +30,7 @@ namespace exceptions {
         void listen(int max_lis);
 
         void setTimeout(int sec, int usec = 0);
+        timeval getTimeout();
 
         TCPSocket accept();
 

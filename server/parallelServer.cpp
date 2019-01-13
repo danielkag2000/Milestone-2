@@ -67,12 +67,13 @@ namespace server_side {
         while (*data.open) {
             TCPSocket client;
             try {
-                client = data.server.accept(); // try accepting
-                client.setTimeout(0); // try setting timeout
+                client = data.server.accept();  // try accepting
+                client.setTimeout(0);           // try setting timeout
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;
-                continue;
+                *(data.open) = false;
+                break;
             }
             catch (...) {
                 try { client.close(); }
@@ -130,7 +131,7 @@ namespace server_side {
             server.listen(SOMAXCONN);
 
             ServerData* data = new ServerData{server};
-            data->tv_sec = 1;
+            data->tv_sec = 5;
             data->clientHandler = ch;
             data->open = &_open;
 
@@ -166,5 +167,9 @@ namespace server_side {
         _open = false;
         _serverThread->join();
         _serverThread = nullptr;
+    }
+
+    void ParallelServer::wait() {
+        _serverThread->join();
     }
 }

@@ -21,6 +21,8 @@ namespace server_side {
         virtual void close();
 
         virtual bool isOpen();
+
+        virtual void wait();
     };
 }
 

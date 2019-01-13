@@ -30,4 +30,6 @@ file(GLOB SOURCES
         exceptions.h
         )
 
+find_package(Threads)
 add_executable(Milestone_2 ${SOURCES})
+target_link_libraries(Milestone_2 ${CMAKE_THREAD_LIBS_INIT})

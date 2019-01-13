@@ -7,9 +7,7 @@
 namespace exceptions {
 #define SYSERR(msg) (system_generic_error(errno, (msg)))
 
-    TCPSocket::TCPSocket() {
-        _sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
+    TCPSocket::TCPSocket() : _sockfd(socket(AF_INET, SOCK_STREAM, 0)) {
         if (_sockfd < 0) {
             throw system_generic_error(errno, "failure opening socket");
         }
@@ -38,6 +36,15 @@ namespace exceptions {
         return _sockfd;
     }
 
+    timeval TCPSocket::getTimeout() {
+        timeval tv;
+        socklen_t skln;
+
+        getsockopt(_sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, &skln);
+
+        return tv;
+    }
+
     TCPServer::TCPServer(int port) : _sock() {
         int sockfd = _sock.fd();
 
@@ -60,6 +67,10 @@ namespace exceptions {
 
     void TCPServer::setTimeout(int sec, int usec) {
         _sock.setTimeout(sec, usec);
+    }
+
+    timeval TCPServer::getTimeout() {
+        return _sock.getTimeout();
     }
 
     TCPSocket TCPServer::accept() {
