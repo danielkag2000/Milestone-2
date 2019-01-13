@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "solve_problem/dfs.h"
 #include "solve_problem/bfs.h"
 #include "solve_problem/best_first_search.h"
@@ -8,6 +9,8 @@
 #include "server/parallelServer.h"
 #include "server/testClientHandler.h"
 #include <unistd.h>
+
+vector<int> split(const char splitBy, const string str);
 
 namespace boot {
     int main() {
@@ -103,21 +106,72 @@ namespace boot {
 
         return 0;
     }
+
+
+    int main3() {
+        ifstream reader("graphs.txt");
+        ofstream writer("sol.txt");
+
+        string line;
+        getline(reader, line);
+        int numberOfGraphs = stoi(line);
+
+        for (int i = 0; i < numberOfGraphs; ++i) {
+            vector<vector<int>> table;
+            getline(reader, line);  // size point
+            int size = stoi(line);
+            getline(reader, line);  // start point
+            getline(reader, line);  // end point
+
+            for (int j = 0; j < size; ++j) {
+                getline(reader, line);
+                table.push_back(split(',', line));
+            }
+            TableGraph* t = new TableGraph(table);
+            ManhattanDistance mh = ManhattanDistance(State<pInt>({size - 1, size - 1}));
+
+            BestFirstSearch<pInt>* alg1 = new BestFirstSearch<pInt>(mh);
+            DFS<pInt>* alg2 = new DFS<pInt>();
+            BFS<pInt>* alg3 = new BFS<pInt>();
+            AStar<pInt>* alg4 = new AStar<pInt>(mh);
+
+            vector<Searcher<pInt>*> sa = {alg1, alg2, alg3, alg4};
+
+            for (int k = 0; k < sa.size(); ++k) {
+                SearchInfo<pInt>* s = sa[k]->solve(t);
+                writer << s->getCost() << "," << s->getNumOfDevelopeNodes() << endl;
+                delete s;
+            }
+            delete alg1;
+            delete alg2;
+            delete alg3;
+            delete alg4;
+        }
+
+
+        return 0;
+    }
 }
-
-
-
-int main3() {
-
-    return 0;
-}
-
-
-
-
-
-
 
 int main() {
-    return boot::main2();
+    return boot::main3();
+}
+
+
+vector<int> split(const char splitBy, const string str) {
+    vector<int> split_line;
+    string string1 = "";
+    for (int i = 0; i < str.size(); ++i) {
+        if (str[i] != splitBy) {
+            string1 += str[i];
+
+        } else {
+            split_line.push_back(stoi(string1));
+            string1 = "";
+        }
+    }
+
+    split_line.push_back(stoi(string1));
+
+    return split_line;
 }
