@@ -5,10 +5,16 @@ set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB SOURCES
         main.cpp
+
         server/server.h
         server/serialServer.h server/serialServer.cpp
         server/clientHandler.h server/clientHandler.cpp
         server/testClientHandler.cpp server/testClientHandler.h
+        server/sockets/sockets.h server/sockets/sockets.cpp
+        server/parallelServer.h server/parallelServer.cpp
+        server/fdbuf.h server/fdbuf.cpp
+        server/threads/threads.h server/threads/threads.cpp
+
         solve_problem/solver.h
 #        algorithms/search_algorithms.h
         solve_problem/searchable.h
@@ -22,7 +28,6 @@ file(GLOB SOURCES
         solve_problem/algo_imp.h
         solve_problem/searchable_table.h solve_problem/searchable_table.cpp
         exceptions.h
-        server/sockets/sockets.cpp server/sockets/sockets.h
         )
 
-add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h)
+add_executable(Milestone_2 ${SOURCES})
