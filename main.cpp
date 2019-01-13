@@ -58,9 +58,9 @@ namespace boot {
         TableGraph* t = new TableGraph(table);
 
         ManhattanDistance mh = ManhattanDistance(State<pInt>({11, 11}));
-        AStar<pInt>* alg = new AStar<pInt>(mh);
+        //AStar<pInt>* alg = new AStar<pInt>(mh);
         //BestFirstSearch<pInt>* alg = new BestFirstSearch<pInt>(mh);
-        //BFS<pInt>* alg = new BFS<pInt>();
+        BFS<pInt>* alg = new BFS<pInt>();
         //DFS<pInt>* alg = new DFS<pInt>();
         SearchInfo<pInt>* s = alg->solve(t);
 
@@ -69,6 +69,7 @@ namespace boot {
             cout << p.first << ", " << p.second <<endl;
         }
         cout << "with the cost of: " << s->getCost() << endl;
+        cout << "with number of develops: " << s->getNumOfDevelopeNodes() << endl;
 
         delete alg;
 
@@ -77,5 +78,5 @@ namespace boot {
 }
 
 int main() {
-    return boot::main();
+    return boot::main2();
 }

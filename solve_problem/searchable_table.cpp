@@ -13,7 +13,11 @@ list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) {
 
     list<State<pInt>> oper;
 
-    if (UP && table[i][j] != -1) {
+    if (table[i][j] == -1) {
+        return oper;
+    }
+
+    if (UP && table[i - 1][j] != -1) {
         State<pInt> child = State<pInt>({i - 1, j});
         //child->setParent(&s);
         child.setCost(s.getCost() + table[i - 1][j]);
