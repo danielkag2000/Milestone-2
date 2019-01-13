@@ -20,6 +20,7 @@ file(GLOB SOURCES
 #        algorithms/state_for_test.h
         test.h
         solve_problem/algo_imp.h
-        )
+        server/sockets/socket_exceptions.h
+        server/sockets/sockets.cpp server/sockets/sockets.h)
 
-add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h)
+add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h server/sockets/sockets.h server/sockets/socket_exceptions.h server/sockets/sockets.cpp)
