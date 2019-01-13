@@ -1,9 +1,9 @@
 #ifndef MILESTONE_2_SOCKETS_H
 #define MILESTONE_2_SOCKETS_H
 
-#include "socket_exceptions.h"
+#include "../../exceptions.h"
 
-namespace posix_sockets {
+namespace exceptions {
     class TCPSocket {
     private:
         int _sockfd;

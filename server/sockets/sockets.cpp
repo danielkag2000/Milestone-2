@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-namespace posix_sockets {
+namespace exceptions {
 #define SYSERR(msg) (system_generic_error(errno, (msg)))
 
     TCPSocket::TCPSocket() {
@@ -77,5 +77,9 @@ namespace posix_sockets {
         }
 
         return TCPSocket(clientfd);
+    }
+
+    void TCPServer::close() {
+        _sock.close();
     }
 }
