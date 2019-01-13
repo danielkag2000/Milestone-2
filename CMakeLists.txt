@@ -23,4 +23,4 @@ file(GLOB SOURCES
         server/sockets/socket_exceptions.h
         server/sockets/sockets.cpp server/sockets/sockets.h)
 
-add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h server/sockets/sockets.h server/sockets/socket_exceptions.h server/sockets/sockets.cpp)
+add_executable(Milestone_2 ${SOURCES} server/fdbuf.cpp server/fdbuf.h server/sockets/sockets.h server/sockets/socket_exceptions.h server/sockets/sockets.cpp server/parallelServer.cpp server/parallelServer.h server/threads/ThreadPool.cpp server/threads/ThreadPool.h)
