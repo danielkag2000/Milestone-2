@@ -17,6 +17,19 @@
 
 using namespace std;
 
+template<class T>
+void deletePointers(T begin, T end) {
+    while (begin != end) {
+        delete *(*begin);
+        begin++;
+    }
+}
+
+template<class structure>
+void deletePointers(const structure& s) {
+    deletePointers(s.cbegin(), s.cend());
+}
+
 template <class T>
 class SearchInfo {
     int cost;

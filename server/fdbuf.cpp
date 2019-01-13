@@ -1,11 +1,6 @@
-//
-// Created by Evyatar on 1/10/2019.
-//
-
 #include "fdbuf.h"
 #include <unistd.h>
 #include <poll.h>
-#include <iostream>
 
 #define TRY_RELOADING \
 		if (_offset == _chars && !reload()) { \
@@ -73,11 +68,6 @@ namespace server_side {
 
     int fdbuf::underflow() {
         TRY_RELOADING
-
-        if (_offset >= _chars) {
-            std::cout << "hi" << std::endl;
-        }
-
         return traits_type::to_int_type(_istream[_offset]);
     }
 
