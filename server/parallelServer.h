@@ -25,4 +25,4 @@ namespace server_side {
 }
 
 
-#endif //MILESTONE_2_PARALLELSERVER_H
+#endif

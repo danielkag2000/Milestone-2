@@ -41,7 +41,7 @@ namespace server_side {
         ostream os(&buf);
 
         // try handling client, might throw exceptions
-        try { inData->handler->handleClient(is, os); }
+        try { data.handler->handleClient(is, os); }
         catch (const exception& e) { cerr << e.what() << endl; }
         catch (...) { cerr << "error handling client" << endl; }
 
@@ -64,11 +64,11 @@ namespace server_side {
         bool firstRun = true;
 
         // run while is open
-        while (data.open) {
+        while (*data.open) {
             TCPSocket client;
             try {
                 client = data.server.accept(); // try accepting
-                client.setTimeout(1, 0); // try setting timeout
+                client.setTimeout(0); // try setting timeout
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;
@@ -135,12 +135,14 @@ namespace server_side {
             data->open = &_open;
 
             try {
+                _open = true;
                 _serverThread = new Thread(serverHandler, data);
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;
                 delete data;
                 server.close();
+                _open = false;
                 return false;
             }
         }
