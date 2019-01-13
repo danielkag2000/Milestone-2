@@ -21,8 +21,8 @@ class TableGraph : public Searchable<pInt> {
 
 public:
 
-    TableGraph(vector<vector<int>> table) {
-        this->table = table;
+    TableGraph(vector<vector<int>>& table) : table(table) {
+        //this->table = table;
         this->size = table.size();
         this->start = State<pInt>(make_pair(0, 0));
         this->start.setCost(table[0][0]);
@@ -54,16 +54,16 @@ public:
             return oper;
         }
 
-        if (UP && table[i - 1][j] != -1) {
-            State<pInt> child = State<pInt>({i - 1, j});
-            //child->setParent(&s);
-            child.setCost(s.getCost() + table[i - 1][j]);
-            oper.push_back(child);
-        }
-
         if (DOWN && table[i + 1][j] != -1) {
             State<pInt> child = State<pInt>({i + 1, j});
             child.setCost(s.getCost() + table[i + 1][j]);
+            //child->setParent(&s);
+            oper.push_back(child);
+        }
+
+        if (RIGHT && table[i][j + 1] != -1) {
+            State<pInt> child = State<pInt>({i, j + 1});
+            child.setCost(s.getCost() + table[i][j + 1]);
             //child->setParent(&s);
             oper.push_back(child);
         }
@@ -75,12 +75,13 @@ public:
             oper.push_back(child);
         }
 
-        if (RIGHT && table[i][j + 1] != -1) {
-            State<pInt> child = State<pInt>({i, j + 1});
-            child.setCost(s.getCost() + table[i][j + 1]);
+        if (UP && table[i - 1][j] != -1) {
+            State<pInt> child = State<pInt>({i - 1, j});
             //child->setParent(&s);
+            child.setCost(s.getCost() + table[i - 1][j]);
             oper.push_back(child);
         }
+
         return oper;
     }
 };

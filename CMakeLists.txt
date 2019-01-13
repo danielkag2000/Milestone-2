@@ -27,6 +27,10 @@ file(GLOB SOURCES
         test.h
         solve_problem/algo_imp.h
         solve_problem/searchable_table.h solve_problem/searchable_table.cpp
+        solve_problem/a_star.h
+        solve_problem/best_first_search.h
+        solve_problem/bfs.h
+        solve_problem/dfs.h
         exceptions.h
         )
 
