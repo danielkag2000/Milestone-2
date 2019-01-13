@@ -110,7 +110,7 @@ namespace boot {
 
     int main3() {
         ifstream reader("graphs.txt");
-        ofstream writer("sol.txt");
+        ofstream writer("solution.txt");
 
         string line;
         getline(reader, line);
