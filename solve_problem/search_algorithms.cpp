@@ -84,7 +84,7 @@ State<T>* BestFirstSearch<T>::make_search(Searchable<T>* searcher) {
 
 
 
-
+/*
 template <class T>
 State<T>* AStar<T>::make_search(Searchable<T>* searcher) {
     auto comparator = [](const State<T>& s1, const State<T>& s2) { return (s1.getCost() + h(s1)) - (s2.getCost() + h(s2)); };
@@ -109,4 +109,4 @@ State<T>* AStar<T>::make_search(Searchable<T>* searcher) {
         }
     }
     return nullptr;
-}
+}*/
