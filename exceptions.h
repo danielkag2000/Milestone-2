@@ -4,7 +4,7 @@
 #include <system_error>
 #include <stdexcept>
 
-namespace posix_sockets {
+namespace exceptions {
     class timeout_exception : public std::runtime_error {
     public:
         timeout_exception(const char* msg) : std::runtime_error(msg){}
