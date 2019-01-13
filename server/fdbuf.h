@@ -34,7 +34,6 @@ namespace server_side {
         std::streamsize _chars;
         std::streamsize _offset;
         std::vector<char> _istream;
-        const int _timeoutmillis;
         const int _bufsize;
 
     private:
@@ -43,6 +42,19 @@ namespace server_side {
          * @return true if managed to, false otherwise.
          */
         bool reload();
+
+        /**
+         * Copy contents of inner buffer and move pointer.
+         * @param target the target to copy into
+         * @param len amount of bytes to copy
+         */
+        void copybuf(char* target, std::streamsize len);
+
+        /**
+         * Get the current amount of characters available from the buffer.
+         * @return the amount of characters available from the buffer
+         */
+        std::streamsize available();
 
     protected:
         /**
@@ -72,7 +84,7 @@ namespace server_side {
          * @param fd a file descriptor for this buffer
          * @param finishClose whether to close the file descriptor upon finishing
          */
-        fdbuf(int fd, bool finishClose = false, int timeoutMillis = 200, int bufsize = 128);
+        fdbuf(int fd, bool finishClose = false, int bufsize = 128);
 
         /**
          * Destructor.

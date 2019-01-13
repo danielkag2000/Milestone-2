@@ -93,15 +93,22 @@ void MySerialServer::close() {
 }
 
 struct ServerData {
-    const bool& _open;
-    const int& _fd;
-
     ClientHandler* clientHandler;
+
+    const bool& open;
+    const int& fd;
+
+    int tv_sec;
+    int tv_usec;
 
     ~ServerData() {
         delete clientHandler;
     }
 };
+
+void MySerialServer::wait() {
+    throw "unsupported operation";
+}
 
 #include "fdbuf.h"
 
@@ -113,8 +120,16 @@ struct ServerData {
 void* parallelHandle(void* in) {
     ServerData* data = (ServerData*) in;
 
-    while (data->_open) {
-        int clientfd = accept(data->_fd, NULL, 0);
+    timeval timeout;
+    timeout.tv_sec = data->tv_sec;
+    timeout.tv_usec = data->tv_usec;
+
+    while (data->open) {
+        int clientfd = accept(data->fd, NULL, 0);
+
+        // set receive timeout
+        setsockopt(clientfd, SOL_SOCKET, SO_RCVTIMEO,
+                   (char *)&timeout, sizeof(timeout));
 
         if (clientfd < 0) {
             perror("ERROR accepting client.");
@@ -135,7 +150,7 @@ void* parallelHandle(void* in) {
 }
 
 bool MySerialServer::acceptClients(ClientHandler* handler) {
-    ServerData* data = new ServerData{ _open, _sockfd, handler->copy() };
+    ServerData* data = new ServerData{ handler->copy(), _open, _sockfd, 5, 0 };
 
     if (pthread_create(&threadId, NULL, parallelHandle, data)) {
         perror("ERROR creating thread.");

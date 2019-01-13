@@ -34,6 +34,8 @@ namespace server_side {
 
         virtual bool isOpen();
 
+        virtual void wait();
+
         /**
          * Destructor.
          */

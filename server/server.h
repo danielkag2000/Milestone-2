@@ -26,6 +26,11 @@ namespace server_side {
         virtual bool isOpen() = 0;
 
         /**
+         * Wait for the server to close if it is open.
+         */
+        virtual void wait() = 0;
+
+        /**
          * Destructor.
          */
         virtual ~Server() = default;

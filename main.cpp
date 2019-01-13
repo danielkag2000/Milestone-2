@@ -2,20 +2,23 @@
 #include "solve_problem/search_algorithms.h"
 #include "test.h"
 #include <vector>
-#include "server/serialServer.h"
+#include "server/parallelServer.h"
 #include "server/testClientHandler.h"
+#include <unistd.h>
 
 namespace boot {
     int main() {
         using namespace server_side;
 
-        Server* s = new MySerialServer;
+        Server* s = new ParallelServer;
         ClientHandler* ch = new MyTestClientHandler;
 
         s->open(25565, ch);
 
-        int x;
-        cin >> x;
+        sleep(1);
+        if (s->isOpen()) {
+            s->wait();
+        }
 
         s->close();
 
@@ -74,5 +77,5 @@ namespace boot {
 }
 
 int main() {
-    return boot::main2();
+    return boot::main();
 }
