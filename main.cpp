@@ -8,6 +8,7 @@
 #include <vector>
 #include "server/parallelServer.h"
 #include "server/testClientHandler.h"
+#include "solve_problem/search_solver.h"
 #include <unistd.h>
 
 vector<int> split(const char splitBy, const string str);
@@ -37,17 +38,17 @@ namespace boot {
     int main2() {
 
         vector<vector<int>> table = {
-                {4, 2, 9, 5, 7, 0, 7, 6, 3, 7, 8},
-                {4, 0,10, 8, 1, 0, 5, 5, 7, 8, 4},
-                {4, 5, 2, 8, 1, 1, 9, 3, 3, 0, 7},
-                {3, 3, 6, 2, 8, 9, 6, 8, 3, 5, 7},
-                {0, 3, 7, 3, 7,10, 4, 8, 9, 1, 1},
-                {7, 3, 2, 3, 5, 0, 2, 1, 6, 0, 9},
-                {6, 9, 8, 1,10, 3, 9, 8, 3, 4, 8},
+                { 4, 2, 9, 5, 7, 0, 7, 6, 3, 7, 8},
+                { 4, 0,10, 8, 1, 0, 5, 5, 7, 8, 4},
+                { 4, 5, 2, 8, 1, 1, 9, 3, 3, 0, 7},
+                { 3, 3, 6, 2, 8, 9, 6, 8, 3, 5, 7},
+                { 0, 3, 7, 3, 7,10, 4, 8, 9, 1, 1},
+                { 7, 3, 2, 3, 5, 0, 2, 1, 6, 0, 9},
+                { 6, 9, 8, 1,10, 3, 9, 8, 3, 4, 8},
                 {10, 8, 0, 2, 3, 8, 0,10,10, 2, 7},
-                {5, 7, 0, 8, 8, 8, 0, 3, 4, 5, -1},
-                {7, 7, 5,10, 8,10, 1, 6, 9,-1, -1},
-                {5,10, 1,10, 7, 7, 3, -1, 8, 0, 6}
+                { 5, 7, 0, 8, 8, 8, 0, 3, 4, 5,-1},
+                { 7, 7, 5,10, 8,10, 1, 6, 9,-1,-1},
+                { 5,10, 1,10, 7, 7, 3,-1, 8, 0, 6}
         };
 
       /*  vector<vector<int>> table = {
@@ -116,7 +117,11 @@ namespace boot {
         //BestFirstSearch<pInt>* alg2 = new BestFirstSearch<pInt>(mh);
         //BFS<pInt>* alg3 = new BFS<pInt>();
         DFS<pInt>* alg4 = new DFS<pInt>();
-        SearchInfo<pInt>* s = alg4->solve(t);
+        //SearchInfo<pInt>* s = alg4->solve(t);
+
+        algorithm::SearchSolver<pInt>* ss = new algorithm::SearchSolver<pInt>(alg4);
+
+        SearchInfo<pInt>* s = ss->solve(t);
 
         list<pInt> l = s->getPath();
         for (pInt p : l) {
@@ -126,6 +131,7 @@ namespace boot {
         cout << "with number of develops: " << s->getNumOfDevelopeNodes() << endl;
         cout << "the path: " << converct_word_path_to_string(converct_path_to_words(l)) << endl;
 
+        delete ss;
         delete alg4;
 
         return 0;
@@ -162,7 +168,7 @@ namespace boot {
             vector<Searcher<pInt>*> sa = {alg1, alg2, alg3, alg4};
 
             for (int k = 0; k < sa.size(); ++k) {
-                SearchInfo<pInt>* s = sa[k]->solve(t);
+                SearchInfo<pInt>* s = sa[k]->make_search(t);
                 writer << s->getCost() << "," << s->getNumOfDevelopeNodes() << endl;
                 delete s;
             }
@@ -178,7 +184,7 @@ namespace boot {
 }
 
 int main() {
-    return boot::main3();
+    return boot::main2();
 }
 
 

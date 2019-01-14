@@ -12,7 +12,6 @@ class BFS : public Searcher<T> {
 public:
     virtual ~BFS() {}
 
-protected:
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
         list<Pointer<State<T>>> open;  // will be treated as a stack  (open)
         set<Pointer<State<T>>> close;  // the close list

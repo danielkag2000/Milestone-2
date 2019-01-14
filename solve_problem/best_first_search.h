@@ -12,7 +12,7 @@ class BestFirstSearch : public HeuristicSearcher<T> {
 public:
     BestFirstSearch(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~BestFirstSearch() {}
-protected:
+
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
         auto& func = HeuristicSearcher<T>::h;  // the Heuristic function
         // the comparator (f(n) = h(n))

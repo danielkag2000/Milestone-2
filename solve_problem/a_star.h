@@ -12,7 +12,7 @@ class AStar : public HeuristicSearcher<T> {
 public:
     AStar(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~AStar() {}
-protected:
+
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
         auto& func = HeuristicSearcher<T>::h;  // the Heuristic function
         // the comparator (f(n) = g(n) + h(n) = cost + h(n))

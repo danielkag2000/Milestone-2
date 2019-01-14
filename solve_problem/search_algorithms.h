@@ -5,7 +5,6 @@
 #ifndef MILESTONE_2_SEARCH_ALGORITHMS_H
 #define MILESTONE_2_SEARCH_ALGORITHMS_H
 
-#include "solver.h"
 #include "searchable.h"
 #include <list>
 #include <stack>
@@ -90,23 +89,15 @@ public:
 
 
 
-
-template <class T>
-using GraphSearch = algorithm::Solver<Searchable<T>*, SearchInfo<T>*>;
-
 /**
  * the searcher
  * @tparam T the type of the state
  */
 template <class T>
-class Searcher : public GraphSearch<T> {
+class Searcher {
 public:
-    virtual SearchInfo<T>* solve(Searchable<T>* searcher) {
-        return make_search(searcher);
-    }
     virtual ~Searcher() {}
 
-protected:
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) = 0;
 };
 
@@ -159,9 +150,6 @@ void deleteQueue(structure& s) {
 
 
 
-
-
-
 /**
  * represent Heuristic Function
  * @tparam T the state type
@@ -204,7 +192,6 @@ protected:
 public:
     HeuristicSearcher(HeuristicFunction<T>& h) : h(h) {}
     virtual ~HeuristicSearcher() {}
-protected:
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) = 0;
 };
 

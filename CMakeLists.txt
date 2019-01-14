@@ -31,6 +31,7 @@ file(GLOB SOURCES
         solve_problem/best_first_search.h
         solve_problem/bfs.h
         solve_problem/dfs.h
+        solve_problem/search_solver.h
         exceptions.h
         )
 
