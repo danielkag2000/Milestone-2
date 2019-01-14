@@ -1,6 +1,10 @@
 #ifndef MILESTONE_2_STATE_H
 #define MILESTONE_2_STATE_H
 
+/**
+ * a state represents a situation
+ * @tparam T the type of the state
+ */
 template <class T>
 class State {
 protected:
@@ -19,8 +23,7 @@ public:
         this->cameFrom = nullptr;
     }
 
-    ~State() { //delete cameFrom;
-         }
+    ~State() { }
 
 
     /*State(const State<T>* s) {

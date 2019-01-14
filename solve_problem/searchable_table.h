@@ -9,6 +9,9 @@ using namespace std;
 
 typedef pair<int, int> pInt;
 
+/**
+ * a problem of search in a table
+ */
 class SearchableTable : public Searchable<pInt> {
     int size;
     vector<vector<int>> table;
@@ -25,11 +28,11 @@ public:
         this->end = State<pInt>(endPoint);
     }
 
-    State<pInt> getInitialState() {
+    virtual State<pInt> getInitialState() {
         return start;
     }
 
-    State<pInt> getGoalState() {
+    virtual State<pInt> getGoalState() {
         return end;
     }
 

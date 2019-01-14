@@ -17,6 +17,12 @@
 
 using namespace std;
 
+/**
+ *
+ * @tparam T the iterator type
+ * @param begin the iterator to the beginning
+ * @param end the iterator to the end
+ */
 template<class T>
 void deletePointers(T begin, T end) {
     while (begin != end) {
@@ -25,17 +31,31 @@ void deletePointers(T begin, T end) {
     }
 }
 
+/**
+ *
+ * @tparam structure the structure type
+ * @param s the data structure
+ */
 template<class structure>
 void deletePointers(const structure& s) {
     deletePointers(s.cbegin(), s.cend());
 }
 
+/**
+ * the solution of the search
+ * @tparam T the type of the state
+ */
 template <class T>
 class SearchInfo {
     int cost;
     int develope;
     list<T> path;
 
+    /**
+     * create the path
+     * @param endState the solution state
+     * @return the list of the values
+     */
     list<T> createStateList(State<T>* endState) {
         list<T> stateList;
 
@@ -74,7 +94,10 @@ public:
 template <class T>
 using GraphSearch = algorithm::Solver<Searchable<T>*, SearchInfo<T>*>;
 
-
+/**
+ * the searcher
+ * @tparam T the type of the state
+ */
 template <class T>
 class Searcher : public GraphSearch<T> {
 public:
@@ -89,7 +112,10 @@ protected:
 
 
 
-
+/**
+ * represent a pointer class
+ * @tparam T the type of the value
+ */
 template<class T>
 class Pointer {
 
@@ -116,7 +142,11 @@ public:
 };
 
 
-
+/**
+ * delete the queue
+ * @tparam structure the structure type
+ * @param s the queue
+ */
 template<class structure>
 void deleteQueue(structure& s) {
 
@@ -132,7 +162,10 @@ void deleteQueue(structure& s) {
 
 
 
-
+/**
+ * represent Heuristic Function
+ * @tparam T the state type
+ */
 template <class T>
 class HeuristicFunction {
 protected:
@@ -145,7 +178,9 @@ public:
 
 
 
-
+/**
+ * Heuristic Function of Manhattan Distance
+ */
 class ManhattanDistance : public HeuristicFunction<pair<int, int>> {
 public:
     ManhattanDistance(const State<pair<int, int>> goal_state) : HeuristicFunction(goal_state) {}
@@ -158,7 +193,10 @@ public:
 
 
 
-
+/**
+ * a searcher that using Heuristic Function
+ * @tparam T the state type
+ */
 template <class T>
 class HeuristicSearcher : public Searcher<T> {
 protected:

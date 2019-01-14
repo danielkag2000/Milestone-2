@@ -3,6 +3,10 @@
 
 #include "search_algorithms.h"
 
+/**
+ * the A* searcher
+ * @tparam T the state type
+ */
 template <class T>
 class AStar : public HeuristicSearcher<T> {
 public:
@@ -10,12 +14,14 @@ public:
     virtual ~AStar() {}
 protected:
     virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
-        auto& func = HeuristicSearcher<T>::h;
+        auto& func = HeuristicSearcher<T>::h;  // the Heuristic function
+        // the comparator (f(n) = g(n) + h(n) = cost + h(n))
         auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return ((*s1)->getCost() + func(*(*s1))) > ((*s2)->getCost() + func(*(*s2))); };
+        // the priority queue (open list)
         priority_queue<Pointer<State<T>>, vector<Pointer<State<T>>>, decltype(comparator)> open(comparator);
-        set<Pointer<State<T>>> close;
-        Pointer<State<T>> current;
-        int develop = 0;
+        set<Pointer<State<T>>> close;  // the close list
+        Pointer<State<T>> current;  // the current state
+        int develop = 0;  // counter of develops
 
         open.push(Pointer<State<T>>(new State<T>(searcher->getInitialState())));
         while (!open.empty()) {
@@ -23,6 +29,7 @@ protected:
             open.pop();
             close.insert(current);
 
+            // if this is the goal state
             if (*(*current) == searcher->getGoalState()) {
                 SearchInfo<T>* si = new SearchInfo<T>(*current, develop);
                 deleteQueue(open);
@@ -30,7 +37,7 @@ protected:
                 return si;
             }
 
-            develop++;
+            develop++;  // develop
             for (State<T>& s : searcher->getAllPossibleStates(*(*current))) {
                 if (close.find(&s) == close.end()) {
                     s.setParent(*current);
@@ -38,6 +45,7 @@ protected:
                 }
             }
         }
+        // not found a path
         deleteQueue(open);
         deletePointers(close);
         return new SearchInfo<T>(nullptr, develop);
