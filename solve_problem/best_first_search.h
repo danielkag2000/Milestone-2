@@ -22,7 +22,6 @@ protected:
             current = open.top();
             open.pop();
             close.insert(current);
-            develop++;
 
             if (*(*current) == searcher->getGoalState()) {
                 SearchInfo<T>* si = new SearchInfo<T>(*current, develop);
@@ -31,7 +30,7 @@ protected:
                 return si;
             }
 
-
+            develop++;
             for (State<T>& s : searcher->getAllPossibleStates(*(*current))) {
                 if (close.find(&s) == close.end()) {
                     s.setParent(*current);

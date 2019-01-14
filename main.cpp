@@ -178,7 +178,7 @@ namespace boot {
 }
 
 int main() {
-    return boot::main2();
+    return boot::main3();
 }
 
 

@@ -20,7 +20,6 @@ protected:
             current = open.back();
             open.pop_back();
             close.insert(current);
-            develop++;
 
             if (*(*current) == searcher->getGoalState()) {
                 SearchInfo<T>* si = new SearchInfo<T>(*current, develop);
@@ -29,6 +28,7 @@ protected:
                 return si;
             }
 
+            develop++;
             list<State<T>> develop_list = searcher->getAllPossibleStates(*(*current));
             develop_list.reverse();
             for (State<T>& s : develop_list) {
