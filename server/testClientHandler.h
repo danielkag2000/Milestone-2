@@ -3,11 +3,13 @@
 
 #include "clientHandler.h"
 #include "../solve_problem/solver.h"
+#include "../cache/fileCacheManager.h"
 
 namespace server_side {
     class MyTestClientHandler : public ClientHandler {
     private:
         algorithm::Solver<const string*, string>* _solver;
+        cache::FileCacheManager<string, string> _cache;
     public:
         MyTestClientHandler();
 
