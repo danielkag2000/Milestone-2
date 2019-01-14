@@ -21,8 +21,8 @@ file(GLOB SOURCES
         solve_problem/state.h
         solve_problem/search_algorithms.h solve_problem/search_algorithms.cpp
 #        algorithms/search_algorithms.cpp
-        algorithms/fileCacheManager.h
-        algorithms/cacheManager.h
+        cache/fileCacheManager.h
+        cache/cacheManager.h
 #        algorithms/state_for_test.h
         test.h
         solve_problem/algo_imp.h
@@ -36,5 +36,5 @@ file(GLOB SOURCES
         )
 
 find_package(Threads)
-add_executable(Milestone_2 ${SOURCES})
+add_executable(Milestone_2 ${SOURCES} cache/fileCacheManager.tpp)
 target_link_libraries(Milestone_2 ${CMAKE_THREAD_LIBS_INIT})

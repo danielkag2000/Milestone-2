@@ -21,7 +21,7 @@ namespace threads {
     else { \
         /* someone tries to join */ \
         thread->_alive = alive;\
-        sleep(1);\
+        std::this_thread::yield();\
     }
 
 
