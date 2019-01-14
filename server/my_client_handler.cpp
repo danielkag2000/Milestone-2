@@ -34,7 +34,7 @@ void server_side::MyClientHandler::handleClient(istream& is, ostream& os) {
         delete s;
 
     } else { // 1225 < size < 2025
-        SearchInfo<pInt>* s = this->solverHolder->getSolver("BestFirstSearch")->solve(st);
+        SearchInfo<pInt>* s = this->solverHolder->getSolver("DFS")->solve(st);
         str = converct_word_path_to_string(converct_path_to_words(s->getPath()));
         delete s;
     }
