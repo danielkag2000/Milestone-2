@@ -32,6 +32,7 @@ file(GLOB SOURCES
         solve_problem/bfs.h
         solve_problem/dfs.h
         solve_problem/search_solver.h
+        server/my_client_handler.h server/my_client_handler.cpp
         exceptions.h
         )
 

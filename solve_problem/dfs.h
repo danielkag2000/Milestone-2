@@ -12,7 +12,7 @@ class DFS : public Searcher<T> {
 public:
     virtual ~DFS() {}
 
-    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
+    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) const {
         list<Pointer<State<T>>> open;  // will be treated as a stack (open)
         set<Pointer<State<T>>> close;  // the close list
         Pointer<State<T>> current;  // the current state

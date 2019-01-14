@@ -98,7 +98,7 @@ class Searcher {
 public:
     virtual ~Searcher() {}
 
-    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) = 0;
+    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) const = 0;
 };
 
 
@@ -157,9 +157,11 @@ void deleteQueue(structure& s) {
 template <class T>
 class HeuristicFunction {
 protected:
-    const State<T> goal;
+    State<T> goal;
 public:
-    HeuristicFunction(const State<T> goal_state) : goal(goal_state) {}
+    HeuristicFunction() {}
+
+    virtual void setGoal(const State<T>& newGoal) { this->goal = newGoal; }
 
     virtual double operator()(const State<T>& current) const = 0;
 };
@@ -171,7 +173,7 @@ public:
  */
 class ManhattanDistance : public HeuristicFunction<pair<int, int>> {
 public:
-    ManhattanDistance(const State<pair<int, int>> goal_state) : HeuristicFunction(goal_state) {}
+    ManhattanDistance() : HeuristicFunction() {}
 
     double operator()(const State<pair<int, int>>& current) const {
         return abs(current.getValue().first - goal.getValue().first)
@@ -192,7 +194,7 @@ protected:
 public:
     HeuristicSearcher(HeuristicFunction<T>& h) : h(h) {}
     virtual ~HeuristicSearcher() {}
-    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) = 0;
+    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) const = 0;
 };
 
 

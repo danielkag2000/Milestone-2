@@ -13,7 +13,10 @@ public:
     BestFirstSearch(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
     virtual ~BestFirstSearch() {}
 
-    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) {
+    virtual SearchInfo<T>* make_search(Searchable<T>* searcher) const {
+
+        // set the goal state
+        HeuristicSearcher<T>::h.setGoal(searcher->getGoalState());
         auto& func = HeuristicSearcher<T>::h;  // the Heuristic function
         // the comparator (f(n) = h(n))
         auto comparator = [&func](const Pointer<State<T>>& s1, const Pointer<State<T>>& s2) { return func(*(*s1)) > func(*(*s2)); };

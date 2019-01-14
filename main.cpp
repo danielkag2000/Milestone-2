@@ -114,7 +114,7 @@ namespace boot {
 */
         TableGraph* t = new TableGraph(table);
 
-        ManhattanDistance mh = ManhattanDistance(State<pInt>({36, 36}));
+        ManhattanDistance mh = ManhattanDistance();
         //AStar<pInt>* alg1 = new AStar<pInt>(mh);
         //BestFirstSearch<pInt>* alg2 = new BestFirstSearch<pInt>(mh);
         //BFS<pInt>* alg3 = new BFS<pInt>();
@@ -140,7 +140,7 @@ namespace boot {
     }
 
 
-    int main3() {
+/*    int main3() {
         ifstream reader("graphs.txt");
         ofstream writer("solution.txt");
 
@@ -160,7 +160,7 @@ namespace boot {
                 table.push_back(split(',', line));
             }
             TableGraph* t = new TableGraph(table);
-            ManhattanDistance mh = ManhattanDistance(State<pInt>({size - 1, size - 1}));
+            ManhattanDistance mh = ManhattanDistance();
 
             BestFirstSearch<pInt>* alg1 = new BestFirstSearch<pInt>(mh);
             DFS<pInt>* alg2 = new DFS<pInt>();
@@ -182,14 +182,14 @@ namespace boot {
 
 
         return 0;
-    }
+    }*/
 }
 
 int main() {
     return boot::main();
 }
 
-
+/*
 vector<int> split(const char splitBy, const string str) {
     vector<int> split_line;
     string string1 = "";
@@ -249,4 +249,4 @@ vector<pInt> from_list_to_vector (list<pInt> l) {
         vec.push_back(p);
     }
     return vec;
-}
+}*/
