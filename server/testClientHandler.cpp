@@ -31,27 +31,35 @@ namespace server_side {
         virtual ~StringStreamer() = default;
     };
 
+    MyTestClientHandler::MyTestClientHandler(SOLVER* solver, CM* cm) :
+        _solver(solver),
+        _cache(cm) {
+
+    }
+
     MyTestClientHandler::MyTestClientHandler() :
-        _solver(new StringReverser()),
-        _cache(new DefaultPSS<string, string>(new StringStreamer, new StringStreamer)) {}
+            _solver(new StringReverser),
+            _cache(new FileCacheManager<string, string>(new DefaultPSS<string, string>(new StringStreamer, new StringStreamer))){
+
+    }
+
 
     void MyTestClientHandler::handleClient(istream &is, ostream &os) {
         string s;
 
         do {
             getline(is, s);
-            cout << s << endl;
 
-            string sol(_solver->solve(&s));
-            os << sol;
+            if (_cache->solutionExists(&s)) {
+                os << *_cache->getSolution(&s);
+            }
+            else {
+                string sol(_solver->solve(&s));
+                _cache->saveSolution(new string(s), new string(sol));
+                os << sol;
+            }
 
-//            if (_cache.solutionExists(&s)) {
-//                os << _cache.getSolution(&s);
-//            }
-//            else {
-//                string sol(_solver->solve(&s));
-//                _cache.saveSolution(new string(s), new string(sol));
-//            }
+
         }
         while (s != "end" && !is.eof());
     }

@@ -3,6 +3,7 @@
 #include <functional>
 #include <fstream>
 #include <algorithm>
+#include <sstream>
 
 namespace cache {
 
@@ -47,7 +48,7 @@ namespace cache {
         in.read(&str[0], solutionLength);
         S* sol = parser->getSolutionStreamer()->deserialize(str);
 
-        return { { prob }, sol };
+        return PSPair<P,S>{ Hashable<P>(prob) , sol };
     }
 
     PROBLEM_TEMPLATE
@@ -70,7 +71,7 @@ namespace cache {
             return;
         }
 
-        while (in) {
+        while (in.peek() != EOF) {
             auto probSol = readSolution(in, _streamer);
             _loaded.add(*probSol.prob, probSol.sol);
         }
@@ -80,13 +81,13 @@ namespace cache {
 
     PROBLEM_TEMPLATE
     void SolutionFile<P,S>::save() {
-        std::ofstream out(_fname, std::ofstream::out || std::ofstream::app);
+        std::ofstream out(_fname, std::ofstream::out | std::ofstream::app);
 
         if (!out) {
-            throw std::exception("Couldn't open file for output.");
+            throw std::runtime_error("Couldn't open file for output.");
         }
 
-        for (PSPair<P,S>& unsaved : _unsaved.getData()) {
+        for (const PSPair<P,S>& unsaved : _unsaved.getData()) {
             writeSolution<P,S>(unsaved, out, _streamer);
         }
 
@@ -102,6 +103,7 @@ namespace cache {
 
     PROBLEM_TEMPLATE
     SolutionFile<P,S>::~SolutionFile() {
+        save();
         _loaded.freeMemory();
     }
 
@@ -134,7 +136,9 @@ namespace cache {
         SolutionFile<P,S>*& file = _files[hash.hash()];
 
         if (file == nullptr){
-            file = new SolutionFile<P, S>(_streamer, to_string(hash.hash()));
+            std::stringstream ss;
+            ss << _dir << '/' << hash.hash();
+            file = new SolutionFile<P, S>(_streamer, ss.str());
         }
 
         return file;

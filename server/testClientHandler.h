@@ -6,10 +6,15 @@
 #include "../cache/fileCacheManager.h"
 
 namespace server_side {
+    typedef cache::FileCacheManager<string, string> CM;
+    typedef algorithm::Solver<const string*, string> SOLVER;
+
     class MyTestClientHandler : public ClientHandler {
     private:
-        algorithm::Solver<const string*, string>* _solver;
-        cache::FileCacheManager<string, string> _cache;
+        SOLVER* _solver;
+        CM* _cache;
+
+        MyTestClientHandler(SOLVER* solver, CM* cache);
     public:
         MyTestClientHandler();
 
@@ -18,7 +23,12 @@ namespace server_side {
         virtual void handleClient(istream& is, ostream& os);
 
         virtual ClientHandler* copy() {
-            return new MyTestClientHandler;
+            return new MyTestClientHandler(_solver, _cache);
+        }
+
+        void free() {
+            delete _solver;
+            delete _cache;
         }
     };
 }

@@ -19,11 +19,12 @@ vector<pInt> from_list_to_vector (list<pInt> l);
 namespace boot {
     int main() {
         using namespace server_side;
+        using namespace cache;
 
         Server* s = new ParallelServer;
-        ClientHandler* ch = new MyTestClientHandler;
+        MyTestClientHandler ch;
 
-        s->open(25565, ch);
+        s->open(25565, &ch);
 
         sleep(1);
         if (s->isOpen()) {
@@ -31,6 +32,7 @@ namespace boot {
         }
 
         s->close();
+        ch.free();
 
         return 0;
     }
