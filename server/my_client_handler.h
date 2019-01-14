@@ -46,7 +46,7 @@ namespace server_side {
         MyClientHandler() {
             this->solverHolder = new AlgorithmSolverHolder<pInt>();
             solverHolder->addSolver("BFS", new algorithm::SearchSolver<pInt>(new BFS<pInt>()));
-            solverHolder->addSolver("BFS", new algorithm::SearchSolver<pInt>(new DFS<pInt>()));
+            solverHolder->addSolver("DFS", new algorithm::SearchSolver<pInt>(new DFS<pInt>()));
             this->mh = ManhattanDistance();
             solverHolder->addSolver("AStar", new algorithm::SearchSolver<pInt>(new AStar<pInt>(mh)));
             solverHolder->addSolver("BestFirstSearch", new algorithm::SearchSolver<pInt>(new BestFirstSearch<pInt>(mh)));
