@@ -90,10 +90,7 @@ namespace cache {
             return _solutionStreamer;
         }
 
-        virtual ~DefaultPSS() {
-            delete _problemStreamer;
-            delete _solutionStreamer;
-        }
+        virtual ~DefaultPSS() = default;
     };
 
     // alias
