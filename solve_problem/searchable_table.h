@@ -6,6 +6,7 @@
 #include "searchable.h"
 #include "state.h"
 #include <typeinfo>
+#include <sstream>
 
 using namespace std;
 
@@ -30,17 +31,19 @@ public:
         this->start.setCost(table[startPoint.first][startPoint.second]);
         this->end = State<pInt>(endPoint);
 
-        this->detail = table.size() + "," + table[0].size();
-        this->detail += "|";
-        this->detail += startPoint.first + "," + startPoint.second;
-        this->detail += "|";
-        this->detail += endPoint.first + "," + endPoint.second;
-        this->detail += "|";
+        stringstream ss;
+        ss << table.size() << ',' << table[0].size()
+            << '|' << startPoint.first << ',' << startPoint.second
+            << '|' << endPoint.first << ',' << endPoint.second
+            << '|';
+
         for (int i = 0; i < table.size(); ++i) {
             for (int j = 0; j < table[0].size(); ++j) {
-                this->detail += table[i][j] + ",";
+                ss << table[i][j] << ',';
             }
         }
+
+        this->detail = ss.str();
     }
 
     virtual State<pInt> getInitialState() {
