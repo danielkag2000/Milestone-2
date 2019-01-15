@@ -4,7 +4,7 @@ project(Milestone_2)
 set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB SOURCES
-        main.cpp
+        old_main.cpp
 
         server/server.h
         server/serialServer.h server/serialServer.cpp
@@ -37,5 +37,5 @@ file(GLOB SOURCES
         )
 
 find_package(Threads)
-add_executable(Milestone_2 ${SOURCES} cache/fileCacheManager.tpp cache/fileUtils.cpp cache/fileUtils.h cache/stringCacheManager.cpp cache/stringCacheManager.h cache/stringStreamer.h)
+add_executable(Milestone_2 ${SOURCES} cache/fileCacheManager.tpp cache/fileUtils.cpp cache/fileUtils.h cache/stringCacheManager.cpp cache/stringCacheManager.h cache/stringStreamer.h main.cpp)
 target_link_libraries(Milestone_2 ${CMAKE_THREAD_LIBS_INIT})
