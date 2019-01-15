@@ -5,6 +5,12 @@
 #include <algorithm>
 #include <sstream>
 
+#include "../exceptions.h"
+#include "fileUtils.h"
+
+#ifndef FILE_CACHE_MANAGER_TPP
+#define FILE_CACHE_MANAGER_TPP
+
 namespace cache {
 
 #define LOCK(var) std::lock_guard<std::mutex> lock(var);
@@ -127,6 +133,7 @@ namespace cache {
     FileCacheManager<P,S>::
             FileCacheManager(PSS<P, S> *streamer, const std::string &directory)
             : _streamer(streamer), _dir(directory) {
+        mkdirIfNotExist(_dir.c_str());
     }
 
     PROBLEM_TEMPLATE
@@ -135,7 +142,7 @@ namespace cache {
 
         SolutionFile<P,S>*& file = _files[hash.hash()];
 
-        if (file == nullptr){
+        if (file == nullptr) {
             std::stringstream ss;
             ss << _dir << '/' << hash.hash();
             file = new SolutionFile<P, S>(_streamer, ss.str());
@@ -218,3 +225,5 @@ namespace cache {
         });
     }
 }
+
+#endif

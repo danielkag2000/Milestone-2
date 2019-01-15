@@ -157,7 +157,7 @@ namespace cache {
         SolutionFile<P,S>* getFile(P* problem);
     public:
         FileCacheManager(PSS<P,S>* streamer,
-                const std::string& directory = "./cache");
+                const std::string& directory = "./cache/");
 
         virtual bool solutionExists(P* p);
 
