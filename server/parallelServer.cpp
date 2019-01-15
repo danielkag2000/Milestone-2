@@ -68,7 +68,7 @@ namespace server_side {
             TCPSocket client;
             try {
                 client = data.server.accept();  // try accepting
-                client.setTimeout(0);           // try setting timeout
+                client.setTimeout(1);           // try setting timeout
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;

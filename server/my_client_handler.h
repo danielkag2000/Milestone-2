@@ -24,13 +24,17 @@ class AlgorithmSolverHolder {
 public:
     AlgorithmSolverHolder() {}
 
-    void addSolver(string name, algorithm::SearchSolver<T>* alg) { this->algorithmSolverHolder.insert(make_pair(name, alg)); }
+    void addSolver(string name, algorithm::SearchSolver<T>* alg) {
+        this->algorithmSolverHolder.insert(make_pair(name, alg));
+    }
 
-    algorithm::SearchSolver<T>* getSolver(string name) { return this->algorithmSolverHolder[name]; }
+    algorithm::SearchSolver<T>* getSolver(string name) {
+        return this->algorithmSolverHolder[name];
+    }
 
     ~AlgorithmSolverHolder() {
-        for (typename solver_map<T>::iterator it = algorithmSolverHolder.begin(); it != algorithmSolverHolder.end(); ++it) {
-            delete it->second;
+        for (auto& alg : algorithmSolverHolder) {
+            delete alg.second;
         }
     }
 };
@@ -39,24 +43,24 @@ public:
 namespace server_side {
 
     class MyClientHandler : public ClientHandler {
-        AlgorithmSolverHolder<pInt>* solverHolder;
+        AlgorithmSolverHolder<pInt> solverHolder;
         ManhattanDistance mh;
 
     public:
-        MyClientHandler() {
-            this->solverHolder = new AlgorithmSolverHolder<pInt>();
-            solverHolder->addSolver("BFS", new algorithm::SearchSolver<pInt>(new BFS<pInt>()));
-            solverHolder->addSolver("DFS", new algorithm::SearchSolver<pInt>(new DFS<pInt>()));
-            this->mh = ManhattanDistance();
-            solverHolder->addSolver("AStar", new algorithm::SearchSolver<pInt>(new AStar<pInt>(mh)));
-            solverHolder->addSolver("BestFirstSearch", new algorithm::SearchSolver<pInt>(new BestFirstSearch<pInt>(mh)));
+        MyClientHandler() : solverHolder(), mh(){
+            typedef algorithm::SearchSolver<pInt> SS;
+
+            solverHolder.addSolver("BFS", new SS(new BFS<pInt>()));
+            solverHolder.addSolver("DFS", new SS(new DFS<pInt>()));
+            solverHolder.addSolver("AStar", new SS(new AStar<pInt>(mh)));
+            solverHolder.addSolver("BestFirstSearch", new SS(new BestFirstSearch<pInt>(mh)));
         }
 
         virtual ClientHandler* copy() { return new MyClientHandler(); }
 
         virtual void handleClient(istream& is, ostream& os);
 
-        virtual ~MyClientHandler() { delete solverHolder; }
+        virtual ~MyClientHandler() = default;
     };
 }
 

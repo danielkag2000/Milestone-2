@@ -5,8 +5,6 @@
 
 
 namespace exceptions {
-#define SYSERR(msg) (system_generic_error(errno, (msg)))
-
     TCPSocket::TCPSocket() : _sockfd(socket(AF_INET, SOCK_STREAM, 0)) {
         if (_sockfd < 0) {
             throw system_generic_error(errno, "failure opening socket");
