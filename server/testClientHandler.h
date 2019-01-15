@@ -4,9 +4,10 @@
 #include "clientHandler.h"
 #include "../solve_problem/solver.h"
 #include "../cache/fileCacheManager.h"
+#include "../cache/stringCacheManager.h"
 
 namespace server_side {
-    typedef cache::FileCacheManager<string, string> CM;
+    typedef cache::StringCacheManager CM;
     typedef algorithm::Solver<const string*, string> SOLVER;
 
     class MyTestClientHandler : public ClientHandler {

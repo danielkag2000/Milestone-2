@@ -8,6 +8,7 @@
 #include "../solve_problem/best_first_search.h"
 #include "../solve_problem/dfs.h"
 #include "../solve_problem/bfs.h"
+#include "../cache/stringCacheManager.h"
 #include <unordered_map>
 
 template <class T>
@@ -43,24 +44,35 @@ public:
 namespace server_side {
 
     class MyClientHandler : public ClientHandler {
+    private:
         AlgorithmSolverHolder<pInt> solverHolder;
         ManhattanDistance mh;
+        cache::StringCacheManager* cm;
 
+        string findSolution(SearchableTable* table, size_t size);
+
+        MyClientHandler(cache::StringCacheManager* cm) : cm(cm) { }
     public:
-        MyClientHandler() : solverHolder(), mh(){
+        MyClientHandler() : solverHolder(), mh() {
             typedef algorithm::SearchSolver<pInt> SS;
 
             solverHolder.addSolver("BFS", new SS(new BFS<pInt>()));
             solverHolder.addSolver("DFS", new SS(new DFS<pInt>()));
             solverHolder.addSolver("AStar", new SS(new AStar<pInt>(mh)));
             solverHolder.addSolver("BestFirstSearch", new SS(new BestFirstSearch<pInt>(mh)));
+
+            cm = new cache::StringCacheManager();
         }
 
-        virtual ClientHandler* copy() { return new MyClientHandler(); }
+        virtual ClientHandler* copy() { return new MyClientHandler(cm); }
 
         virtual void handleClient(istream& is, ostream& os);
 
         virtual ~MyClientHandler() = default;
+
+        void closeCache() {
+            delete cm;
+        }
     };
 }
 

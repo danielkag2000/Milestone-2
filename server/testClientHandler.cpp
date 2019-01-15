@@ -39,7 +39,7 @@ namespace server_side {
 
     MyTestClientHandler::MyTestClientHandler() :
             _solver(new StringReverser),
-            _cache(new FileCacheManager<string, string>(new DefaultPSS<string, string>(new StringStreamer, new StringStreamer))){
+            _cache(new StringCacheManager){
 
     }
 

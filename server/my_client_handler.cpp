@@ -1,11 +1,20 @@
 #include "my_client_handler.h"
 
+using namespace server_side;
+
 vector<int> split(const char splitBy, const string str);
 vector<pInt> from_list_to_vector (list<pInt> l);
 string convert_word_path_to_string(vector<string> path);
 vector<string> convert_path_to_words(list<pInt> path_list);
 
-void server_side::MyClientHandler::handleClient(istream& is, ostream& os) {
+constexpr int minDFSSize = 35 * 35;
+constexpr int maxDFSSize = 45 * 45;
+
+inline bool outDFSRange(int x) {
+    return minDFSSize >= x || maxDFSSize <= x;
+}
+
+void MyClientHandler::handleClient(istream& is, ostream& os) {
     string line;
 
     getline(is, line);
@@ -14,37 +23,54 @@ void server_side::MyClientHandler::handleClient(istream& is, ostream& os) {
         table.push_back(split(',', line));
         getline(is, line);
     }
-    getline(is, line);
-    vector<int> pointStart = split(',', line);
-    getline(is, line);
-    vector<int> pointEnd = split(',', line);
+
+    vector<int> pointEnd = table.back();
+    table.pop_back();
+    vector<int> pointStart = table.back();
+    table.pop_back();
 
     if (table.empty()) {
+        os << endl;
         return;
     }
 
-    SearchableTable* st = new SearchableTable(table, make_pair(pointStart[0], pointStart[1]), make_pair(pointEnd[0], pointEnd[1]));
+    SearchableTable* st = new SearchableTable(table, make_pair(pointStart[0], pointStart[1]),
+            make_pair(pointEnd[0], pointEnd[1]));
 
-    int size = table.size() * table[0].size();
+    size_t size = table.size() * table[0].size();
 
-    string str;
-    if (size <= 1225 || size >= 2025) {
-        SearchInfo<pInt>* s = this->solverHolder.getSolver("BestFirstSearch")->solve(st);
-        str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
-        delete s;
-
-    } else { // 1225 < size < 2025
-        SearchInfo<pInt>* s = this->solverHolder.getSolver("DFS")->solve(st);
-        str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
-        delete s;
-    }
-
-    os << str << endl;
+    string sol(findSolution(st, size));
+    os << sol << endl;
 
     delete st;
 }
 
+string MyClientHandler::findSolution(SearchableTable* table, size_t size) {
+    string tableString(table->toString());
 
+    if (cm->solutionExists(&tableString)) {
+        return *cm->getSolution(&tableString);
+    }
+    else {
+        // create solution
+        string str;
+        if (outDFSRange(size)) {
+            SearchInfo<pInt>* s = this->solverHolder.getSolver("BestFirstSearch")->solve(table);
+            str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
+            delete s;
+
+        } else {
+            SearchInfo<pInt>* s = this->solverHolder.getSolver("DFS")->solve(table);
+            str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
+            delete s;
+        }
+
+        // save solution
+        cm->saveSolution(new string(tableString), new string(str));
+
+        return str;
+    }
+}
 
 vector<int> split(const char splitBy, const string str) {
     vector<int> split_line;
