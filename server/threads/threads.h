@@ -29,8 +29,10 @@ namespace threads {
 
         /**
          * Join this thread if it is alive.
+         * @param returnValue a pointer to a variable
+         *  which will hold the return value from the thread
          */
-        void join();
+        void join(void** returnValue = NULL);
     };
 
     class ThreadPool {

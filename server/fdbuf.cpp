@@ -60,7 +60,7 @@ namespace server_side {
         copybuf(s, oldBytes);
 
         // read from file descriptor into s
-        ssize_t countRead = read(_fd, s, n - oldBytes);
+        ssize_t countRead = read(_fd, s, (size_t) n - oldBytes);
 
         // calculate entire amount read
         return countRead < 0 ? oldBytes : oldBytes + countRead;

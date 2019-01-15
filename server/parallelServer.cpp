@@ -68,7 +68,7 @@ namespace server_side {
             TCPSocket client;
             try {
                 client = data.server.accept();  // try accepting
-                client.setTimeout(1);           // try setting timeout
+                client.setTimeout(0);           // set timeout(same as parent)
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;
@@ -83,13 +83,13 @@ namespace server_side {
                 }
             }
 
-            // try running client
+            // create client data
             ClientData* clientData = new ClientData;
             clientData->handler = data.clientHandler;
             clientData->client = client;
 
             try {
-                // create client data
+                // try running client
                 Thread* t = new Thread(clientHandler, clientData);
                 clientsPool.add(t);
             }
@@ -141,11 +141,20 @@ namespace server_side {
             }
             catch (const exception& e) {
                 cerr << e.what() << endl;
+
+                // free resources
                 delete data;
                 server.close();
                 _open = false;
+                _serverThread = nullptr;
+
                 return false;
             }
+
+            // close server
+            server.close();
+            _open = false;
+            _serverThread = nullptr;
         }
         catch (const exception& e) {
             cerr << e.what() << endl;

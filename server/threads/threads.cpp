@@ -65,10 +65,10 @@ namespace threads {
         }
     }
 
-    void Thread::join() {
+    void Thread::join(void** ptr) {
         lock();
         if (_alive) {
-            pthread_join(_id, NULL);
+            pthread_join(_id, ptr);
         }
         unlock();
     }
