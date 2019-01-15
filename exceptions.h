@@ -23,6 +23,9 @@ namespace exceptions {
                     msg){
         }
     };
+
+#define SYSERR(msg) (system_generic_error(errno, (msg)))
+
 }
 
 #endif

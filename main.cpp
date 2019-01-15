@@ -13,7 +13,7 @@
 
 vector<int> split(const char splitBy, const string str);
 string converct_word_path_to_string(vector<string> path);
-vector<string> converct_path_to_words(list<pInt> path_list);
+vector<string> convert_path_to_words(list<pInt> path_list);
 vector<pInt> from_list_to_vector (list<pInt> l);
 
 namespace boot {
@@ -131,7 +131,7 @@ namespace boot {
         }
         cout << "with the cost of: " << s->getCost() << endl;
         cout << "with number of develops: " << s->getNumOfDevelopeNodes() << endl;
-        cout << "the path: " << converct_word_path_to_string(converct_path_to_words(l)) << endl;
+        cout << "the path: " << convert_word_path_to_string(convert_path_to_words(l)) << endl;
 
         delete ss;
         delete alg4;
@@ -208,7 +208,7 @@ vector<int> split(const char splitBy, const string str) {
     return split_line;
 }
 
-vector<string> converct_path_to_words(list<pInt> path_list) {
+vector<string> convert_path_to_words(list<pInt> path_list) {
     vector<pInt> path = from_list_to_vector(path_list);
     vector<string> word_path;
 
@@ -229,7 +229,7 @@ vector<string> converct_path_to_words(list<pInt> path_list) {
     return word_path;
 }
 
-string converct_word_path_to_string(vector<string> path) {
+string convert_word_path_to_string(vector<string> path) {
     string str = "";
 
     for (int i = 0; i < path.size(); ++i) {

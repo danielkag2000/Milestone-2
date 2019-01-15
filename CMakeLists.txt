@@ -37,5 +37,5 @@ file(GLOB SOURCES
         )
 
 find_package(Threads)
-add_executable(Milestone_2 ${SOURCES} cache/fileCacheManager.tpp)
+add_executable(Milestone_2 ${SOURCES} cache/fileCacheManager.tpp cache/fileUtils.cpp cache/fileUtils.h cache/stringCacheManager.cpp cache/stringCacheManager.h cache/stringStreamer.h)
 target_link_libraries(Milestone_2 ${CMAKE_THREAD_LIBS_INIT})
