@@ -163,13 +163,21 @@ namespace server_side {
         return _serverThread;
     }
 
+    void ParallelServer::finalize() {
+        _serverThread->join();
+
+        if (_serverThread) {
+            delete _serverThread;
+            _serverThread = nullptr;
+        }
+    }
+
     void ParallelServer::close() {
         _open = false;
-        _serverThread->join();
-        _serverThread = nullptr;
+        finalize();
     }
 
     void ParallelServer::wait() {
-        _serverThread->join();
+        finalize();
     }
 }

@@ -13,6 +13,8 @@ namespace server_side {
     private:
         bool _open;
         threads::Thread* _serverThread;
+
+        void finalize();
     public:
         ParallelServer() : _serverThread(nullptr) { }
 
