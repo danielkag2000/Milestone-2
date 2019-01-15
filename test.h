@@ -84,6 +84,14 @@ public:
 
         return oper;
     }
+
+    size_t hash() {
+        return 0;
+    }
+
+    virtual string toString() {
+        return "";
+    }
 };
 
 

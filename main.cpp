@@ -4,7 +4,7 @@
 #include "solve_problem/bfs.h"
 #include "solve_problem/best_first_search.h"
 #include "solve_problem/a_star.h"
-#include "test.h"
+#include "solve_problem/searchable_table.h"
 #include <vector>
 #include "server/parallelServer.h"
 #include "server/testClientHandler.h"
@@ -112,16 +112,16 @@ namespace boot {
                 {0,1,1,400},
                 {7,2,1,400}};
 */
-        TableGraph* t = new TableGraph(table);
+        SearchableTable* t = new SearchableTable(table, make_pair(0,0), make_pair(table[0].size() - 1, table[0].size() - 1));
 
         ManhattanDistance mh = ManhattanDistance();
-        //AStar<pInt>* alg1 = new AStar<pInt>(mh);
+        AStar<pInt>* alg1 = new AStar<pInt>(mh);
         //BestFirstSearch<pInt>* alg2 = new BestFirstSearch<pInt>(mh);
         //BFS<pInt>* alg3 = new BFS<pInt>();
-        DFS<pInt>* alg4 = new DFS<pInt>();
+        //DFS<pInt>* alg4 = new DFS<pInt>();
         //SearchInfo<pInt>* s = alg4->solve(t);
 
-        algorithm::SearchSolver<pInt>* ss = new algorithm::SearchSolver<pInt>(alg4);
+        algorithm::SearchSolver<pInt>* ss = new algorithm::SearchSolver<pInt>(alg1);
 
         SearchInfo<pInt>* s = ss->solve(t);
 
@@ -131,16 +131,16 @@ namespace boot {
         }
         cout << "with the cost of: " << s->getCost() << endl;
         cout << "with number of develops: " << s->getNumOfDevelopeNodes() << endl;
-        cout << "the path: " << convert_word_path_to_string(convert_path_to_words(l)) << endl;
+        //cout << "the path: " << convert_word_path_to_string(convert_path_to_words(l)) << endl;
 
         delete ss;
-        delete alg4;
+        delete alg1;
 
         return 0;
     }
 
 
-/*    int main3() {
+    int main3() {
         ifstream reader("graphs.txt");
         ofstream writer("solution.txt");
 
@@ -159,7 +159,7 @@ namespace boot {
                 getline(reader, line);
                 table.push_back(split(',', line));
             }
-            TableGraph* t = new TableGraph(table);
+            SearchableTable* t = new SearchableTable(table, make_pair(0,0), make_pair(table[0].size() - 1, table[0].size() - 1));
             ManhattanDistance mh = ManhattanDistance();
 
             BestFirstSearch<pInt>* alg1 = new BestFirstSearch<pInt>(mh);
@@ -182,11 +182,11 @@ namespace boot {
 
 
         return 0;
-    }*/
+    }
 }
 
 int main() {
-    return boot::main();
+    return boot::main3();
 }
 
 /*

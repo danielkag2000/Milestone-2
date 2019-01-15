@@ -17,16 +17,16 @@ list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) {
         return oper;
     }
 
-    if (UP && table[i - 1][j] != -1) {
-        State<pInt> child = State<pInt>({i - 1, j});
-        //child->setParent(&s);
-        child.setCost(s.getCost() + table[i - 1][j]);
-        oper.push_back(child);
-    }
-
     if (DOWN && table[i + 1][j] != -1) {
         State<pInt> child = State<pInt>({i + 1, j});
         child.setCost(s.getCost() + table[i + 1][j]);
+        //child->setParent(&s);
+        oper.push_back(child);
+    }
+
+    if (RIGHT && table[i][j + 1] != -1) {
+        State<pInt> child = State<pInt>({i, j + 1});
+        child.setCost(s.getCost() + table[i][j + 1]);
         //child->setParent(&s);
         oper.push_back(child);
     }
@@ -38,11 +38,12 @@ list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) {
         oper.push_back(child);
     }
 
-    if (RIGHT && table[i][j + 1] != -1) {
-        State<pInt> child = State<pInt>({i, j + 1});
-        child.setCost(s.getCost() + table[i][j + 1]);
+    if (UP && table[i - 1][j] != -1) {
+        State<pInt> child = State<pInt>({i - 1, j});
         //child->setParent(&s);
+        child.setCost(s.getCost() + table[i - 1][j]);
         oper.push_back(child);
     }
+
     return oper;
 }
