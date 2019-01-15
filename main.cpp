@@ -10,7 +10,15 @@ namespace boot {
             using namespace server_side;
             using namespace cache;
 
-            int port = stoi(argv[1]);
+            int port;
+
+            try {
+                port = stoi(argv[1]);
+            }
+            catch (const exception& e) {
+                cerr << "invalid port entered." << endl;
+                return 1;
+            }
 
             Server *s = new ParallelServer;
             MyClientHandler ch;
