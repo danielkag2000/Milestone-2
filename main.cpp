@@ -7,12 +7,13 @@
 #include "solve_problem/searchable_table.h"
 #include <vector>
 #include "server/parallelServer.h"
-#include "server/testClientHandler.h"
+#include "server/my_client_handler.h"
 #include "solve_problem/search_solver.h"
+#include "server/testClientHandler.h"
 #include <unistd.h>
 
 vector<int> split(const char splitBy, const string str);
-string converct_word_path_to_string(vector<string> path);
+string convert_word_path_to_string(vector<string> path);
 vector<string> convert_path_to_words(list<pInt> path_list);
 vector<pInt> from_list_to_vector (list<pInt> l);
 
@@ -22,17 +23,21 @@ namespace boot {
         using namespace cache;
 
         Server* s = new ParallelServer;
-        MyTestClientHandler ch;
+        MyClientHandler ch;
 
         s->open(25565, &ch);
 
-        sleep(1);
-        if (s->isOpen()) {
-            s->wait();
-        }
+//        sleep(1);
+//        if (s->isOpen()) {
+//            s->wait();
+//        }
+
+        cin.get();
 
         s->close();
-        ch.free();
+        ch.closeCache();
+
+        delete s;
 
         return 0;
     }
@@ -186,7 +191,7 @@ namespace boot {
 }
 
 int main() {
-    return boot::main3();
+    return boot::main();
 }
 
 /*
