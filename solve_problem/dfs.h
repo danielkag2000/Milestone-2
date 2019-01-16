@@ -16,7 +16,6 @@ public:
         list<Pointer<State<T>>> open;  // will be treated as a stack (open)
         set<Pointer<State<T>>> close;  // the close list
         Pointer<State<T>> current;  // the current state
-        int develop = 0;  // counter of develops
 
         open.push_back(Pointer<State<T>>(new State<T>(searcher->getInitialState())));
         while (!open.empty()) {
@@ -26,13 +25,12 @@ public:
 
             // if this is the goal state
             if (*(*current) == searcher->getGoalState()) {
-                SearchInfo<T>* si = new SearchInfo<T>(*current, develop);
+                SearchInfo<T>* si = new SearchInfo<T>(*current, close.size());
                 deletePointers(open);
                 deletePointers(close);
                 return si;
             }
 
-            develop++;  // develop
             list<State<T>> develop_list = searcher->getAllPossibleStates(*(*current));
             develop_list.reverse();  // because we get the develops from the last to the end
             for (State<T>& s : develop_list) {
@@ -43,6 +41,7 @@ public:
             }
         }
         // not found a path
+        int develop = close.size();
         deletePointers(open);
         deletePointers(close);
         return new SearchInfo<T>(nullptr, develop);

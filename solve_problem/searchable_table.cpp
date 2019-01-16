@@ -45,5 +45,6 @@ list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) {
         oper.push_back(child);
     }
 
+
     return oper;
 }

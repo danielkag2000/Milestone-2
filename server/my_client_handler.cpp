@@ -7,13 +7,6 @@ vector<pInt> from_list_to_vector (list<pInt> l);
 string convert_word_path_to_string(vector<string> path);
 vector<string> convert_path_to_words(list<pInt> path_list);
 
-constexpr int minDFSSize = 35 * 35;
-constexpr int maxDFSSize = 45 * 45;
-
-inline bool outDFSRange(int x) {
-    return minDFSSize >= x || maxDFSSize <= x;
-}
-
 void MyClientHandler::handleClient(istream& is, ostream& os) {
     string line;
 
@@ -54,16 +47,9 @@ string MyClientHandler::findSolution(SearchableTable* table, size_t size) {
     else {
         // create solution
         string str;
-        if (outDFSRange(size)) {
-            SearchInfo<pInt>* s = this->solverHolder.getSolver("BestFirstSearch")->solve(table);
-            str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
-            delete s;
-
-        } else {
-            SearchInfo<pInt>* s = this->solverHolder.getSolver("DFS")->solve(table);
-            str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
-            delete s;
-        }
+        SearchInfo<pInt>* s = this->solverHolder.getSolver("AStar")->solve(table);
+        str = convert_word_path_to_string(convert_path_to_words(s->getPath()));
+        delete s;
 
         // save solution
         cm->saveSolution(new string(tableString), new string(str));
