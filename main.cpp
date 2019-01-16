@@ -10,7 +10,7 @@ namespace boot {
             using namespace server_side;
             using namespace cache;
 
-            int port;
+            int port ;
 
             try {
                 port = stoi(argv[1]);

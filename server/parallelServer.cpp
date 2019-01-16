@@ -151,10 +151,7 @@ namespace server_side {
                 return false;
             }
 
-            // close server
-            server.close();
-            _open = false;
-            _serverThread = nullptr;
+            // done with opening server
         }
         catch (const exception& e) {
             cerr << e.what() << endl;
