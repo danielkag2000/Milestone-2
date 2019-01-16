@@ -24,7 +24,6 @@ file(GLOB SOURCES
         cache/fileCacheManager.h
         cache/cacheManager.h
 #        algorithms/state_for_test.h
-        test.h
         solve_problem/algo_imp.h
         solve_problem/searchable_table.h solve_problem/searchable_table.cpp
         solve_problem/a_star.h
