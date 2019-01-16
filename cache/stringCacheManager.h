@@ -11,7 +11,7 @@ namespace cache {
         Streamer<std::string>* _streamer;
         PSS<std::string, std::string>* _streamerCollection;
     public:
-        StringCacheManager(const std::string& dir = "./cache");
+        StringCacheManager(const std::string& dir = "./string_cache");
 
         virtual bool solutionExists(std::string* p);
 
